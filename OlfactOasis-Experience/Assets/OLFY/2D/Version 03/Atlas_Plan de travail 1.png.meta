@@ -1,0 +1,442 @@
+fileFormatVersion: 2
+guid: 86ff5caf895a84248bf5dc969d96d1ca
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Background slider
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 38
+        width: 851
+        height: 2632
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 308eea57efeccf246b54f12953b84f9d
+      internalID: 2132117922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: intensite
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 3650
+        width: 504
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23880b7d8532f7d4a889b324b0bf6691
+      internalID: -126907477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: duration
+      rect:
+        serializedVersion: 2
+        x: 981
+        y: 3650
+        width: 503
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf15474f34b38b04dbcec6c6f950a034
+      internalID: 1100869113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frequence
+      rect:
+        serializedVersion: 2
+        x: 1695
+        y: 3650
+        width: 504
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d80fa4e559b409e418d85ee68bb7884f
+      internalID: -1328763375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Background
+      rect:
+        serializedVersion: 2
+        x: 2334
+        y: 913
+        width: 1981
+        height: 3380
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43dbd7d1f223c6a4e81c13e8212e9930
+      internalID: -1812287841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rond
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 2915
+        width: 504
+        height: 506
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 891fb97d7da56c24d964ad3993402442
+      internalID: -1191964001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5 modules
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 2699
+        width: 1310
+        height: 750
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18f5847ff3436604bbc11a7adcb1a1c4
+      internalID: 1248631856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3 modules
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 1827
+        width: 1359
+        height: 741
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7e30a8291e00d84e9fedf7075b48682
+      internalID: -1178586530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: logo
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 91
+        width: 1721
+        height: 767
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3284bc9027440641b08c10fbd1dff07
+      internalID: -2000597345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_Carre
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 74
+        width: 800
+        height: 800
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4895536264199a5499748910fafc778f
+      internalID: -2128299880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: b8f94e2ba7a47f04188f2ccef929eca2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      3 modules: -1178586530
+      5 modules: 1248631856
+      Atlas_Plan de travail 1_10: 838454729
+      Atlas_Plan de travail 1_11: 383544636
+      Atlas_Plan de travail 1_12: 891210733
+      Atlas_Plan de travail 1_13: -1208686353
+      Atlas_Plan de travail 1_14: -1850778185
+      Atlas_Plan de travail 1_15: 1512318307
+      Atlas_Plan de travail 1_16: 1507465627
+      Atlas_Plan de travail 1_17: 52923414
+      Atlas_Plan de travail 1_18: -1167955429
+      Atlas_Plan de travail 1_19: -506858741
+      Atlas_Plan de travail 1_20: -2063391229
+      Atlas_Plan de travail 1_21: -1044917755
+      Atlas_Plan de travail 1_22: -1242692077
+      Atlas_Plan de travail 1_23: -1990849255
+      Atlas_Plan de travail 1_24: 514125345
+      Atlas_Plan de travail 1_25: 55898565
+      Atlas_Plan de travail 1_26: -1223069570
+      Atlas_Plan de travail 1_27: -2007513642
+      Atlas_Plan de travail 1_28: 899015552
+      Atlas_Plan de travail 1_29: 473454280
+      Atlas_Plan de travail 1_30: -1843793690
+      Atlas_Plan de travail 1_31: -934701314
+      Atlas_Plan de travail 1_32: 2075240098
+      Atlas_Plan de travail 1_33: 627057074
+      Atlas_Plan de travail 1_34: 585294890
+      Atlas_Plan de travail 1_35: -1703156741
+      Atlas_Plan de travail 1_36: -430754870
+      Atlas_Plan de travail 1_37: -449643313
+      Atlas_Plan de travail 1_38: -484299262
+      Atlas_Plan de travail 1_39: 1011235933
+      Atlas_Plan de travail 1_40: 14385980
+      Atlas_Plan de travail 1_41: 934913451
+      Atlas_Plan de travail 1_42: -1232689409
+      Atlas_Plan de travail 1_43: -912714355
+      Atlas_Plan de travail 1_44: -1619146413
+      Atlas_Plan de travail 1_45: 1425452265
+      Atlas_Plan de travail 1_46: -1456378006
+      Atlas_Plan de travail 1_47: 1815969841
+      Atlas_Plan de travail 1_48: -1072516512
+      Atlas_Plan de travail 1_49: -852843819
+      Atlas_Plan de travail 1_50: -112025294
+      Atlas_Plan de travail 1_51: 1182600807
+      Atlas_Plan de travail 1_52: 1282267361
+      Atlas_Plan de travail 1_53: 1416331234
+      Atlas_Plan de travail 1_54: 593135592
+      Atlas_Plan de travail 1_55: -1163118824
+      Atlas_Plan de travail 1_56: -328997312
+      Atlas_Plan de travail 1_57: 1519949424
+      Atlas_Plan de travail 1_58: 1723585445
+      Atlas_Plan de travail 1_59: -435646143
+      Atlas_Plan de travail 1_60: -1560685215
+      Atlas_Plan de travail 1_61: -2023155454
+      Atlas_Plan de travail 1_62: 153010535
+      Atlas_Plan de travail 1_63: -957734006
+      Atlas_Plan de travail 1_64: -1656659347
+      Atlas_Plan de travail 1_65: -3353385
+      Atlas_Plan de travail 1_66: 1120020213
+      Atlas_Plan de travail 1_67: 234631357
+      Atlas_Plan de travail 1_68: 997488534
+      Atlas_Plan de travail 1_69: -268389973
+      Atlas_Plan de travail 1_70: 1658527842
+      Atlas_Plan de travail 1_71: 1269695972
+      Atlas_Plan de travail 1_72: -1676722444
+      Atlas_Plan de travail 1_73: 1083545407
+      Atlas_Plan de travail 1_74: -373592927
+      Atlas_Plan de travail 1_75: 957323620
+      Atlas_Plan de travail 1_76: -1581837702
+      Atlas_Plan de travail 1_77: 236221972
+      Atlas_Plan de travail 1_9: -626451092
+      Background: -1812287841
+      Background slider: 2132117922
+      Frequence: -1328763375
+      Logo_Carre: -2128299880
+      duration: 1100869113
+      intensite: -126907477
+      logo: -2000597345
+      rond: -1191964001
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
