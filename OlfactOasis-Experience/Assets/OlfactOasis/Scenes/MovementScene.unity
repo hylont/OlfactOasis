@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71623f2c9c2d26d42a93d50ecd7edb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveSpotOnClick
-  m_agent: {fileID: 1256724305}
+  m_agent: {fileID: 0}
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -1292,17 +1292,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 872072574883981691, guid: eb8c9c3cc40a18e47acdd534c08fc2a9, type: 3}
---- !u!114 &1256724305 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 797509807319400261, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
-  m_PrefabInstance: {fileID: 677652088}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8a366775eaf6c46a4d4627b90a6c89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: com.lohan.unity-utils::Packages.com.lohan.unity_utils.Runtime.Scripts.AI.MovementAI
 --- !u!1001 &1464696142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2139,13 +2128,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889515170}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4999996, y: -0, z: -0, w: 0.8660257}
-  m_LocalPosition: {x: 0, y: 12.63, z: -10.35}
+  m_LocalRotation: {x: 0.12350145, y: -0.856915, z: 0.24142373, w: 0.43835896}
+  m_LocalPosition: {x: 11.1, y: 5.36, z: 6.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.469, y: -125.816, z: 0}
 --- !u!114 &1889515174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2333,9 +2322,9 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1889515173}
   - {fileID: 597790506}
   - {fileID: 1223839435}
   - {fileID: 2121184327}
   - {fileID: 677652088}
   - {fileID: 594080036}
+  - {fileID: 1889515173}
