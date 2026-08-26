@@ -44,7 +44,7 @@ public class OlfyHandler : MonoBehaviour
     {
         if (_olfyManager == null)
         {
-            Log("OlfyManager reference is missing!", ESeverity.ERROR);
+            LLogger.E("OlfyManager reference is missing!");
             if(_debugText != null)
             {
                 _debugText.text = "OlfyManager reference is missing!";
@@ -52,6 +52,6 @@ public class OlfyHandler : MonoBehaviour
             return;
         }
 
-        LLogger.LogOnScreen("Olfy handler initiated");
+        LLogger.L("Olfy handler initiated");
     }
 }

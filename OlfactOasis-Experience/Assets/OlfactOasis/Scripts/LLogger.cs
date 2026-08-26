@@ -2,6 +2,7 @@ using EditorAttributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public static class LLogger
@@ -25,7 +26,22 @@ public static class LLogger
     private static string LogDirectory => Path.Combine(Application.persistentDataPath, LOG_FOLDER_NAME);
     private static string CurrentLogFilePath => Path.Combine(LogDirectory, $"{DateTime.Now:yyyy-MM-dd}{LOG_FILE_EXTENSION}");
 
-    public static void Log(string p_text, ESeverity p_severity = ESeverity.INFO)
+    public static void L(string p_text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
+    {
+        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {p_text}", ESeverity.INFO);
+    }
+
+    public static void W(string p_text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
+    {
+        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {p_text}", ESeverity.WARNING);
+    }
+
+    public static void E(string p_text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
+    {
+        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {p_text}", ESeverity.ERROR);
+    }
+
+    private static void Log(string p_text, ESeverity p_severity = ESeverity.INFO)
     {
         lock (m_lock)
         {
@@ -63,6 +79,9 @@ public static class LLogger
                     Debug.Log(line);
                     break;
             }
+#if !UNITY_EDITOR
+            LogOnScreen(p_text, p_severity);
+#endif
         }
     }
 

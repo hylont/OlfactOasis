@@ -1,5 +1,7 @@
 using Packages.com.lohan.unity_utils.Runtime.Scripts.AI;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class ForceMoveAgent : MonoBehaviour
@@ -14,6 +16,9 @@ public class ForceMoveAgent : MonoBehaviour
 
     [Header("Target")]
     [SerializeField] private string TargetTag = "WALKABLE";
+
+    [Header("Callbacks")]
+    public UnityEvent OnDestinationSet;
 
     void Start()
     {
@@ -43,6 +48,7 @@ public class ForceMoveAgent : MonoBehaviour
             {
                 if(hit.collider.gameObject.CompareTag(TargetTag))
                 {
+                    OnDestinationSet?.Invoke();
                     m_agent.SetDestination(hit.point);
                 }
                 else

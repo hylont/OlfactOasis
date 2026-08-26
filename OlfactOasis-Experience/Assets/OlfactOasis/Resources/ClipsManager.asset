@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03022a4729598e241ba90ccbb1faed0b, type: 3}
+  m_Name: ClipsManager
+  m_EditorClassIdentifier: Assembly-CSharp::ClipsManager
+  _clips:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+        m_TextWithWhitespace: "Keys\u200B"
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - argos.introduction.presentation
+    - argos.introduction.consignedeplacement
+    - argos.introduction.consignepause
+    - argos.introduction.consignepouce1
+    - argos.introduction.consignepouce2
+    - argos.introduction.introtaches
+    - argos.introduction.invitationpause
+    - argos.introduction.remerciementsnon
+    - argos.introduction.remerciementsoui
+    - argos.introduction.retourpause
+    _keys:
+    - argos.introduction.presentation
+    - argos.introduction.consignedeplacement
+    - argos.introduction.consignepause
+    - argos.introduction.consignepouce1
+    - argos.introduction.consignepouce2
+    - argos.introduction.introtaches
+    - argos.introduction.invitationpause
+    - argos.introduction.remerciementsnon
+    - argos.introduction.remerciementsoui
+    - argos.introduction.retourpause
+    _values:
+    - Clip: {fileID: 8300000, guid: d11da6f318ae8d2438ac92002d24197b, type: 3}
+      asText: "Salut ! On m'appelle Argos, et je suis un chien-robot qui veut savoir
+        ce que c'est que d'\xEAtre un vrai chien et j'ai besoin de toi. Je suis limit\xE9
+        : je suis capable de voir et d'entendre le monde, mais je ne peux toujours
+        pas le sentir. Et pour qu'on puisse me cr\xE9er une truffe, il faudrait que
+        tu m'aides \xE0 enregistrer ce que tu penses de diff\xE9rentes odeurs dans
+        diff\xE9rentes situations. Est-ce que tu veux bien m'aider s'il te pla\xEEt?"
+    - Clip: {fileID: 8300000, guid: 612a544da2bbae8418e722769348744e, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: 1b85a64a93bc05c41a461df30b8665c9, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: fa6ec966c7a593545a4620af02e7d83e, type: 3}
+      asText: "Pour me r\xE9pondre, c'est tr\xE8s simple : pouce lev\xE9 pour oui,
+        pouce baiss\xE9 pour non !"
+    - Clip: {fileID: 8300000, guid: 9bd7cc2f75107f049962384af33c69c4, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: 199662c515a92414b9f3ec9ad3276d29, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: 7787fc01e0c0e7946a968eb5a6163335, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: 90334d9de4ca90d4f98bb84b3539b47e, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: 7ca5bd86b5ada604eb2450a01ed02407, type: 3}
+      asText: 
+    - Clip: {fileID: 8300000, guid: 728ec5e025b4ae642b96f71cb8c7b803, type: 3}
+      asText: 
+  _errorClip:
+    Clip: {fileID: 0}
+    asText: 
+  _soundsFolder: Assets/OlfactOasis/Sounds
+  _scriptsFolder: Assets/OlfactOasis/Scripts

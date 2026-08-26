@@ -62,6 +62,7 @@ public class ArgosAI : MovementAI
 
     [Header("Talking")]
     public AudioSource TalkingAudioSource;
+    public AudioDescriptionCanvas AudioDescription;
     [SerializeField] int _talkingSampleWindow = 256;
     [SerializeField] float _talkingSensitivity = 12f;
     [SerializeField] float _talkingSmoothSpeed = 15f;
@@ -108,14 +109,49 @@ public class ArgosAI : MovementAI
         if (LeftPupil != null) _leftPupilRestPosition = LeftPupil.transform.localPosition;
         if (RightPupil != null) _rightPupilRestPosition = RightPupil.transform.localPosition;
         if (Mouth != null) _mouthRestScale = Mouth.transform.localScale;
+        
+        if (AudioDescription != null) AudioDescription.Hide();
 
         _talkingSamples = new float[_talkingSampleWindow];
 
-        if (Animator != null) Animator.SetBool(_poweredAnim, _powerOnAtStart);
+        if (_powerOnAtStart) PowerOn();
 
         SetMood(EArgosMood.DEFAULT);
 
         StartCoroutine(RandomBlinkRoutine());
+
+    }
+
+    [Button("Power On")]
+    void PowerOn()
+    {
+        if (Animator == null)
+        {
+            LLogger.E("No animator set to argos, can't power on !");
+            return;
+        }
+
+        Animator.SetBool(_poweredAnim, true);
+
+        Talk("argos.introduction.presentation");
+    }
+
+    public void Talk(string p_clipID)
+    {
+        if(TalkingAudioSource == null)
+        {
+            LLogger.E("No audio source, Argos can't talk !");
+            return;
+        }
+
+        if(AudioDescription == null)
+        {
+            LLogger.E("No audio description target set !");
+            return;
+        }
+
+        AudioDescription.Show(ClipsManager.GetClip(p_clipID));
+        
     }
 
     int ResolveBlendShapeIndex(SkinnedMeshRenderer p_renderer, string p_blendShapeName)
@@ -133,14 +169,6 @@ public class ArgosAI : MovementAI
 
     [Button("Set Mood to Default")]
     void SetMoodDefault() => SetMood(EArgosMood.DEFAULT);
-
-    [SerializeField] AudioClip _testClip;
-    [Button("Test clip")]
-    void TestClip()
-    {
-        TalkingAudioSource.clip = _testClip;
-        TalkingAudioSource.Play();
-    }
 
     public void SetMood(EArgosMood p_mood)
     {
