@@ -28,6 +28,7 @@ public class AudioDescriptionCanvas : MonoBehaviour
     RectTransform _rectTransform;
     CanvasGroup _canvasGroup;
     Coroutine _activeCoroutine;
+    AudioData _lastAudioData;
 
     public bool IsShowing { get; private set; }
 
@@ -55,6 +56,8 @@ public class AudioDescriptionCanvas : MonoBehaviour
             return;
         }
 
+        _lastAudioData = p_audioData;
+
         if (_activeCoroutine != null) StopCoroutine(_activeCoroutine);
         _activeCoroutine = StartCoroutine(ShowRoutine(p_audioData));
     }
@@ -64,6 +67,18 @@ public class AudioDescriptionCanvas : MonoBehaviour
         if (_activeCoroutine != null) StopCoroutine(_activeCoroutine);
         IsShowing = false;
         _activeCoroutine = StartCoroutine(AnimateVisibilityRoutine(false));
+    }
+
+    [Button("Repeat Last Audio")]
+    public void RepeatLastAudio()
+    {
+        if (_lastAudioData == null)
+        {
+            LLogger.W("AudioDescriptionCanvas: no audio has been played yet");
+            return;
+        }
+
+        Show(_lastAudioData);
     }
 
     IEnumerator ShowRoutine(AudioData p_audioData)
@@ -89,6 +104,9 @@ public class AudioDescriptionCanvas : MonoBehaviour
         _activeCoroutine = null;
     }
 
+    // Spreads words evenly across chunks (sizes differ by at most one word) instead of always
+    // filling chunks to _wordsPerChunk, so a trailing remainder doesn't leave the last chunk
+    // noticeably shorter than the rest.
     static List<string> SplitIntoWordChunks(string p_text, int p_wordsPerChunk)
     {
         string[] words = p_text.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
@@ -100,10 +118,16 @@ public class AudioDescriptionCanvas : MonoBehaviour
             return chunks;
         }
 
-        for (int i = 0; i < words.Length; i += p_wordsPerChunk)
+        int chunkCount = Mathf.Max(1, Mathf.CeilToInt((float)words.Length / p_wordsPerChunk));
+        int baseSize = words.Length / chunkCount;
+        int remainder = words.Length % chunkCount;
+
+        int index = 0;
+        for (int i = 0; i < chunkCount; i++)
         {
-            int count = Mathf.Min(p_wordsPerChunk, words.Length - i);
-            chunks.Add(string.Join(" ", words, i, count));
+            int size = baseSize + (i < remainder ? 1 : 0);
+            chunks.Add(string.Join(" ", words, index, size));
+            index += size;
         }
 
         return chunks;

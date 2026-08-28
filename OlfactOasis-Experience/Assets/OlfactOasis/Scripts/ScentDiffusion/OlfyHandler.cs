@@ -1,18 +1,12 @@
+using EditorAttributes;
 using Olfy;
 using RotaryHeart.Lib.SerializableDictionary;
 using System;
 using TMPro;
 using UnityEngine;
-using static LLogger;
 
-public class OlfyHandler : MonoBehaviour
+public class OlfyHandler : MonoBehaviour, IScentDiffuser
 {
-    public enum EScentSlotStatus
-    {
-        UNKNOWN, READY, COOLDOWN, EMPTY, ERROR, WORKING
-    }
-
-
 
     [Serializable]
     public class ScentSlotData
@@ -21,6 +15,14 @@ public class OlfyHandler : MonoBehaviour
         public TextMeshProUGUI DebugText;
     }
 
+    [SerializeField]
+    ScentDiffusionParameters _testScent = new ScentDiffusionParameters(1, .5f, 3f);
+
+    [Button("Diffuse test")]
+    void DiffuseTest()
+    {
+        RequestDiffusion(_testScent);
+    }
 
     [Header("Dependencies")]
     [SerializeField] private OlfyManager _olfyManager;
@@ -51,7 +53,21 @@ public class OlfyHandler : MonoBehaviour
             }
             return;
         }
+    }
 
-        LLogger.L("Olfy handler initiated");
+    public bool RequestDiffusion(ScentDiffusionParameters p_params)
+    {
+        if (OlfyManager.Instance.isReady)
+        {
+            BleManager.Instance.Diffuse((int)p_params.Duration, p_params.SlotIndex+"", (int)(p_params.Strength*100), p_params.Frequency, false);
+            return true;
+        }
+        LLogger.E("Olfy was not ready");
+        return false;
+    }
+
+    public ScentDiffuserDeviceInfo GetDeviceStatus()
+    {
+        throw new NotImplementedException();
     }
 }

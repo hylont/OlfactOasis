@@ -1,19 +1,12 @@
 using EditorAttributes;
 using RotaryHeart.Lib.SerializableDictionary;
-using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEditor;
-#endif
 
-[Serializable]
-public class AudioData
-{
-    public AudioClip Clip;
-    [TextArea] public string asText;
-}
+#endif
 
 [CreateAssetMenu(fileName = "ClipsManager", menuName = "OlfactOasis/Clips Manager")]
 public class ClipsManager : ScriptableObject

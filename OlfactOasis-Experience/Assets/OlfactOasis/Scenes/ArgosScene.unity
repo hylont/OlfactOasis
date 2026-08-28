@@ -127,10 +127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1474754379105486669, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
-      propertyPath: _powerOnAtStart
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4288962623671483604, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -175,18 +171,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Argos
       objectReference: {fileID: 0}
-    - target: {fileID: 6723791060065195952, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
-      propertyPath: _hideDelay
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6723791060065195952, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
-      propertyPath: _wordsPerChunk
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304063307204517215, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 8300000, guid: fa6ec966c7a593545a4620af02e7d83e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

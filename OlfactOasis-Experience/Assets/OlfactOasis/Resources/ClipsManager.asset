@@ -69,7 +69,11 @@ MonoBehaviour:
     - Clip: {fileID: 8300000, guid: 612a544da2bbae8418e722769348744e, type: 3}
       asText: 
     - Clip: {fileID: 8300000, guid: 1b85a64a93bc05c41a461df30b8665c9, type: 3}
-      asText: 
+      asText: "Une petite chose avant qu'on continue : si jamais tu as besoin de
+        souffler, croise les bras pendant 3 secondes, \xE0 n'importe quel moment,
+        et je t'emm\xE8ne directement dans une grande for\xEAt bien calme. Et si
+        tu pr\xE9f\xE8res tout arr\xEAter, retire simplement le casque, ce n'est
+        vraiment pas grave, promis !"
     - Clip: {fileID: 8300000, guid: fa6ec966c7a593545a4620af02e7d83e, type: 3}
       asText: "Pour me r\xE9pondre, c'est tr\xE8s simple : pouce lev\xE9 pour oui,
         pouce baiss\xE9 pour non !"

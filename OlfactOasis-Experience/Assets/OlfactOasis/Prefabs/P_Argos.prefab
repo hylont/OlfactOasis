@@ -88,7 +88,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioDescriptionCanvas
   _audioSource: {fileID: 8304063307204517215}
   _text: {fileID: 4790968203315414670}
-  _appearDuration: 0.35
+  _wordsPerChunk: 18
+  _appearDuration: 1
   _appearCurve:
     serializedVersion: 2
     m_Curve:
@@ -114,8 +115,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _shownScale: {x: 1, y: 1, z: 1}
-  _hideDelay: 2
-  _disappearDuration: 0.35
+  _hideDelay: 10
+  _disappearDuration: 1
   _disappearCurve:
     serializedVersion: 2
     m_Curve:
@@ -140,9 +141,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _previewAudioData:
-    Clip: {fileID: 0}
-    asText: 
 --- !u!1 &1592223733443626992
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,8 +235,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.08
-  m_fontSizeBase: 0.08
+  m_fontSize: 0.06
+  m_fontSizeBase: 0.06
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -518,7 +516,7 @@ MonoBehaviour:
   _talkingSampleWindow: 256
   _talkingSensitivity: 12
   _talkingSmoothSpeed: 15
-  _mouthScaleAmount: 3.5
+  _mouthScaleAmount: 15
   LeftPupil: {fileID: 759242340832583841}
   RightPupil: {fileID: 9151149926774269743}
   LeftEye: {fileID: 1101046377904004413}
@@ -688,7 +686,7 @@ Transform:
   m_GameObject: {fileID: 7975579416036873076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.785, z: 0.426}
+  m_LocalPosition: {x: 0.094, y: 0.733, z: 0.399}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

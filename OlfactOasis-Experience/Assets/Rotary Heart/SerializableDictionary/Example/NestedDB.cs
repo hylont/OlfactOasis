@@ -1,5 +1,4 @@
 ﻿using RotaryHeart.Lib.SerializableDictionary;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RotaryHeart.Lib
