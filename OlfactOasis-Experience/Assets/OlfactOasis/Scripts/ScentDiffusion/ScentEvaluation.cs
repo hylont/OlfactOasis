@@ -6,12 +6,12 @@ using UnityEngine;
 public class ScentEvaluation
 {
     public ScentDiffusionParameters Parameters;
-    public bool WasPerceived = false;
+    public EUserResponse WasPerceived;
     public EUserResponse WasPleasant;
     public List<Vector3> ResponseCurvePoints;
     public float ResponseMagnitude;
 
-    public ScentEvaluation(ScentDiffusionParameters parameters, bool wasPerceived, EUserResponse wasPleasant, List<Vector3> responseCurvePoints)
+    public ScentEvaluation(ScentDiffusionParameters parameters, EUserResponse wasPerceived, EUserResponse wasPleasant, List<Vector3> responseCurvePoints)
     {
         Parameters = parameters;
         WasPerceived = wasPerceived;

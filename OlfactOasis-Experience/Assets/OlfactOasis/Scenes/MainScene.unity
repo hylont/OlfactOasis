@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -432,6 +433,24 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e750d143798beb4186098f5aaa06d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  LeftHand: {fileID: 0}
+  LeftFingerTip: {fileID: 0}
+  RightHand: {fileID: 0}
+  RightFingerTip: {fileID: 0}
+  Head: {fileID: 0}
+  _debug: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +614,85 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &637476282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 637476283}
+  - component: {fileID: 637476284}
+  m_Layer: 0
+  m_Name: ScentScenario
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &637476283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637476282}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &637476284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637476282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4ad5b9f11050443a35f48c1be20d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScentEvaluationScenario
+  ScentStrengthsConfigs:
+  - 0.01
+  - 0.03
+  - 0.07
+  - 0.2
+  - 0.55
+  - 1
+  ScentDuration: 3
+  PerceptionQuestionDelay: 10
+  ApproachDistance: 1.5
+  NegativeAnswersUntilSkip: 3
+  ScentsData:
+  - Name: 0
+    SlotIndex: 0
+    DefaultVibrationFrequency: 0
+    Evaluations: []
+    MildParameters:
+      SlotIndex: 0
+      Strength: 0
+      Duration: 0
+      Frequency: 0
+    OptimalParameters:
+      SlotIndex: 0
+      Strength: 0
+      Duration: 0
+      Frequency: 0
+    StrongParameters:
+      SlotIndex: 0
+      Strength: 0
+      Duration: 0
+      Frequency: 0
+  _olfactiveBooths: []
+  _argos: {fileID: 416955076}
+  _player: {fileID: 330585548}
+  _scentDiffuser: {fileID: 1537473725}
 --- !u!1 &681173092
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5150584261470190245, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2032,7 +2130,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 1
+      isExpanded: 0
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -2048,7 +2146,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 1
+    isExpanded: 0
     _keyValues: 000000000100000002000000030000000400000005000000
     _keys: 000000000100000002000000030000000400000005000000
     _values:
@@ -2087,8 +2185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6167712efdcb284485d908883be6824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmoothSceneSwitch
-  m_fadeCanvasGroup: {fileID: 0}
-  m_fadeDuration: 1
+  _fadeCanvasGroup: {fileID: 306172468}
+  _fadeDuration: 3
 --- !u!4 &1557686329
 Transform:
   m_ObjectHideFlags: 0
@@ -2497,17 +2595,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71623f2c9c2d26d42a93d50ecd7edb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceMoveAgent
-  m_agent: {fileID: 416955076}
-  moveAction:
+  _agent: {fileID: 416955076}
+  _moveAction:
     m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: eecdcc7d-12eb-42d8-abb1-eddeb2c8cbcf
+    m_Id: 368fee44-b832-4fc9-b635-03af6fbfd2bf
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 8a152554-4a17-4f7f-b54e-e994cc21eaf6
+      m_Id: 4bd6c7a9-b2f5-4c33-86e0-232ca89071e6
       m_Path: <Mouse>/leftButton
       m_Interactions: 
       m_Processors: 
@@ -2516,7 +2614,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
     m_Priority: 0
-  TargetTag: WALKABLE
+  _targetTag: WALKABLE
   OnDestinationSet:
     m_PersistentCalls:
       m_Calls:
@@ -2593,3 +2691,4 @@ SceneRoots:
   - {fileID: 885689039}
   - {fileID: 810866901}
   - {fileID: 1828874680}
+  - {fileID: 637476283}

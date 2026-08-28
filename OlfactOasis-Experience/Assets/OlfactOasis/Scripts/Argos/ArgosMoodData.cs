@@ -12,16 +12,16 @@ public class ArgosMoodData
     public Vector2 RPupilPositionOffset = Vector2.zero;
     public bool AllowBlink = true;
 
-    public static ArgosMoodData Lerp(ArgosMoodData p_from, ArgosMoodData p_to, float p_t)
+    public static ArgosMoodData Lerp(ArgosMoodData from, ArgosMoodData to, float t)
     {
         return new ArgosMoodData
         {
-            LEyeHappy = Mathf.Lerp(p_from.LEyeHappy, p_to.LEyeHappy, p_t),
-            LEyeBlink = Mathf.Lerp(p_from.LEyeBlink, p_to.LEyeBlink, p_t),
-            LPupilPositionOffset = Vector2.Lerp(p_from.LPupilPositionOffset, p_to.LPupilPositionOffset, p_t),
-            REyeHappy = Mathf.Lerp(p_from.REyeHappy, p_to.REyeHappy, p_t),
-            REyeBlink = Mathf.Lerp(p_from.REyeBlink, p_to.REyeBlink, p_t),
-            RPupilPositionOffset = Vector2.Lerp(p_from.RPupilPositionOffset, p_to.RPupilPositionOffset, p_t),
+            LEyeHappy = Mathf.Lerp(from.LEyeHappy, to.LEyeHappy, t),
+            LEyeBlink = Mathf.Lerp(from.LEyeBlink, to.LEyeBlink, t),
+            LPupilPositionOffset = Vector2.Lerp(from.LPupilPositionOffset, to.LPupilPositionOffset, t),
+            REyeHappy = Mathf.Lerp(from.REyeHappy, to.REyeHappy, t),
+            REyeBlink = Mathf.Lerp(from.REyeBlink, to.REyeBlink, t),
+            RPupilPositionOffset = Vector2.Lerp(from.RPupilPositionOffset, to.RPupilPositionOffset, t),
         };
     }
 }

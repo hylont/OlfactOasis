@@ -1,4 +1,4 @@
 ﻿public enum EScentName
 {
-    UNKNOWN, VANILLA, ROSE, BUTANOL, DARK_CHOCOLATE, LAVENDER, STRAWBERRY, TEST_ORANGE
+    Unknown, Vanilla, Rose, Butanol, DarkChocolate, Lavender, Strawberry, TestOrange
 }

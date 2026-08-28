@@ -8,47 +8,47 @@ public class ForceMoveAgent : MonoBehaviour
     //TODO ADD IN THE PACKAGE
 
     [Header("Agent")]
-    [SerializeField] private MovementAI m_agent;
+    [SerializeField] private MovementAI _agent;
 
     [Header("Interaction")]
-    [SerializeField] private InputAction moveAction;
+    [SerializeField] private InputAction _moveAction;
 
     [Header("Target")]
-    [SerializeField] private string TargetTag = "WALKABLE";
+    [SerializeField] private string _targetTag = "WALKABLE";
 
     [Header("Callbacks")]
     public UnityEvent OnDestinationSet;
 
     void Start()
     {
-        if(m_agent == null)
+        if(_agent == null)
         {
-            m_agent = FindAnyObjectByType<MovementAI>();
+            _agent = FindAnyObjectByType<MovementAI>();
         }
     }
 
     void OnEnable()
     {
-        moveAction.Enable();
+        _moveAction.Enable();
     }
 
     void OnDisable()
     {
-        moveAction.Disable();
+        _moveAction.Disable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (moveAction.WasPerformedThisFrame())
+        if (_moveAction.WasPerformedThisFrame())
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if(hit.collider.gameObject.CompareTag(TargetTag))
+                if(hit.collider.gameObject.CompareTag(_targetTag))
                 {
                     OnDestinationSet?.Invoke();
-                    m_agent.SetDestination(hit.point);
+                    _agent.SetDestination(hit.point);
                 }
                 else
                 {

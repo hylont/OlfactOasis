@@ -7,5 +7,5 @@ using UnityEngine;
 public class AudioData
 {
     public AudioClip Clip;
-    [TextArea] public string asText;
+    [TextArea] public string AsText;
 }

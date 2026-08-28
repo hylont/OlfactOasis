@@ -42,9 +42,9 @@ public class AudioDescriptionCanvas : MonoBehaviour
         _canvasGroup.interactable = false;
     }
 
-    public void Show(AudioData p_audioData)
+    public void Show(AudioData audioData)
     {
-        if (p_audioData == null || p_audioData.Clip == null)
+        if (audioData == null || audioData.Clip == null)
         {
             LLogger.E("AudioDescriptionCanvas: AudioData or its Clip is missing");
             return;
@@ -56,10 +56,10 @@ public class AudioDescriptionCanvas : MonoBehaviour
             return;
         }
 
-        _lastAudioData = p_audioData;
+        _lastAudioData = audioData;
 
         if (_activeCoroutine != null) StopCoroutine(_activeCoroutine);
-        _activeCoroutine = StartCoroutine(ShowRoutine(p_audioData));
+        _activeCoroutine = StartCoroutine(ShowRoutine(audioData));
     }
 
     public void Hide()
@@ -81,20 +81,20 @@ public class AudioDescriptionCanvas : MonoBehaviour
         Show(_lastAudioData);
     }
 
-    IEnumerator ShowRoutine(AudioData p_audioData)
+    IEnumerator ShowRoutine(AudioData audioData)
     {
         IsShowing = true;
 
-        _audioSource.clip = p_audioData.Clip;
+        _audioSource.clip = audioData.Clip;
         _audioSource.Play();
 
-        string description = p_audioData.asText ?? string.Empty;
+        string description = audioData.AsText ?? string.Empty;
         List<string> chunks = SplitIntoWordChunks(description, _wordsPerChunk);
         _text.text = chunks[0];
         _text.maxVisibleCharacters = 0;
 
         yield return AnimateVisibilityRoutine(true);
-        yield return RevealTextRoutine(p_audioData.Clip, chunks);
+        yield return RevealTextRoutine(audioData.Clip, chunks);
 
         yield return new WaitForSeconds(_hideDelay);
 
@@ -107,9 +107,9 @@ public class AudioDescriptionCanvas : MonoBehaviour
     // Spreads words evenly across chunks (sizes differ by at most one word) instead of always
     // filling chunks to _wordsPerChunk, so a trailing remainder doesn't leave the last chunk
     // noticeably shorter than the rest.
-    static List<string> SplitIntoWordChunks(string p_text, int p_wordsPerChunk)
+    static List<string> SplitIntoWordChunks(string text, int wordsPerChunk)
     {
-        string[] words = p_text.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+        string[] words = text.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
         List<string> chunks = new List<string>();
 
         if (words.Length == 0)
@@ -118,7 +118,7 @@ public class AudioDescriptionCanvas : MonoBehaviour
             return chunks;
         }
 
-        int chunkCount = Mathf.Max(1, Mathf.CeilToInt((float)words.Length / p_wordsPerChunk));
+        int chunkCount = Mathf.Max(1, Mathf.CeilToInt((float)words.Length / wordsPerChunk));
         int baseSize = words.Length / chunkCount;
         int remainder = words.Length % chunkCount;
 
@@ -137,44 +137,44 @@ public class AudioDescriptionCanvas : MonoBehaviour
     // so the text stays in sync even if the AudioSource is paused or its pitch changes.
     // Each chunk replaces the previous one on screen instead of stacking, so long
     // descriptions page through a few words at a time.
-    IEnumerator RevealTextRoutine(AudioClip p_clip, List<string> p_chunks)
+    IEnumerator RevealTextRoutine(AudioClip clip, List<string> chunks)
     {
         int lastChunkIndex = -1;
 
-        while (_audioSource.isPlaying && _audioSource.clip == p_clip)
+        while (_audioSource.isPlaying && _audioSource.clip == clip)
         {
-            float progress = p_clip.length > 0f ? Mathf.Clamp01(_audioSource.time / p_clip.length) : 1f;
-            lastChunkIndex = ShowChunkAtProgress(p_chunks, progress, lastChunkIndex);
+            float progress = clip.length > 0f ? Mathf.Clamp01(_audioSource.time / clip.length) : 1f;
+            lastChunkIndex = ShowChunkAtProgress(chunks, progress, lastChunkIndex);
             yield return null;
         }
 
-        ShowChunkAtProgress(p_chunks, 1f, lastChunkIndex);
+        ShowChunkAtProgress(chunks, 1f, lastChunkIndex);
     }
 
-    int ShowChunkAtProgress(List<string> p_chunks, float p_progress, int p_lastChunkIndex)
+    int ShowChunkAtProgress(List<string> chunks, float progress, int lastChunkIndex)
     {
-        float chunkPosition = p_progress * p_chunks.Count;
-        int chunkIndex = Mathf.Clamp(Mathf.FloorToInt(chunkPosition), 0, p_chunks.Count - 1);
+        float chunkPosition = progress * chunks.Count;
+        int chunkIndex = Mathf.Clamp(Mathf.FloorToInt(chunkPosition), 0, chunks.Count - 1);
 
-        if (chunkIndex != p_lastChunkIndex) _text.text = p_chunks[chunkIndex];
+        if (chunkIndex != lastChunkIndex) _text.text = chunks[chunkIndex];
 
         float chunkProgress = Mathf.Clamp01(chunkPosition - chunkIndex);
-        _text.maxVisibleCharacters = Mathf.FloorToInt(chunkProgress * p_chunks[chunkIndex].Length);
+        _text.maxVisibleCharacters = Mathf.FloorToInt(chunkProgress * chunks[chunkIndex].Length);
 
         return chunkIndex;
     }
 
-    IEnumerator AnimateVisibilityRoutine(bool p_show)
+    IEnumerator AnimateVisibilityRoutine(bool show)
     {
         float startAlpha = _canvasGroup.alpha;
         Vector3 startScale = _rectTransform.localScale;
-        float targetAlpha = p_show ? 1f : 0f;
-        Vector3 targetScale = p_show ? _shownScale : Vector3.zero;
-        float duration = p_show ? _appearDuration : _disappearDuration;
-        AnimationCurve curve = p_show ? _appearCurve : _disappearCurve;
+        float targetAlpha = show ? 1f : 0f;
+        Vector3 targetScale = show ? _shownScale : Vector3.zero;
+        float duration = show ? _appearDuration : _disappearDuration;
+        AnimationCurve curve = show ? _appearCurve : _disappearCurve;
 
-        _canvasGroup.blocksRaycasts = p_show;
-        _canvasGroup.interactable = p_show;
+        _canvasGroup.blocksRaycasts = show;
+        _canvasGroup.interactable = show;
 
         if (duration <= 0f)
         {
@@ -194,9 +194,9 @@ public class AudioDescriptionCanvas : MonoBehaviour
         SetVisibility(targetAlpha, targetScale);
     }
 
-    void SetVisibility(float p_alpha, Vector3 p_scale)
+    void SetVisibility(float alpha, Vector3 scale)
     {
-        _canvasGroup.alpha = p_alpha;
-        _rectTransform.localScale = p_scale;
+        _canvasGroup.alpha = alpha;
+        _rectTransform.localScale = scale;
     }
 }

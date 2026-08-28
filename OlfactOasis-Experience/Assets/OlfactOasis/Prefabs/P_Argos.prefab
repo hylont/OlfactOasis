@@ -444,9 +444,9 @@ MonoBehaviour:
   _powerOnAtStart: 0
   _lookingAnim: LOOKING_AT
   _poweredAnim: POWERED
-  _HappyBSName: Happy
-  _BlinkingBSName: Blinking
-  _TalkingBSName: TalkingBS
+  _happyBSName: Happy
+  _blinkingBSName: Blinking
+  _talkingBSName: TalkingBS
   _moodTransitionCurve:
     serializedVersion: 2
     m_Curve:

@@ -11,7 +11,7 @@ public class OlfyHandler : MonoBehaviour, IScentDiffuser
     [Serializable]
     public class ScentSlotData
     {
-        public EScentSlotStatus Status = EScentSlotStatus.UNKNOWN;
+        public EScentSlotStatus Status = EScentSlotStatus.Unknown;
         public TextMeshProUGUI DebugText;
     }
 
@@ -34,12 +34,12 @@ public class OlfyHandler : MonoBehaviour, IScentDiffuser
 
     [SerializeField] private SerializableDictionaryBase<EScentSlotStatus, Color> _statusColors = new()
     {
-        { EScentSlotStatus.UNKNOWN, Color.gray },
-        { EScentSlotStatus.READY, Color.green },
-        { EScentSlotStatus.COOLDOWN, Color.yellow },
-        { EScentSlotStatus.EMPTY, Color.red },
-        { EScentSlotStatus.ERROR, Color.magenta },
-        { EScentSlotStatus.WORKING, Color.cyan }
+        { EScentSlotStatus.Unknown, Color.gray },
+        { EScentSlotStatus.Ready, Color.green },
+        { EScentSlotStatus.Cooldown, Color.yellow },
+        { EScentSlotStatus.Empty, Color.red },
+        { EScentSlotStatus.Error, Color.magenta },
+        { EScentSlotStatus.Working, Color.cyan }
     };
 
     void Start()
@@ -55,11 +55,11 @@ public class OlfyHandler : MonoBehaviour, IScentDiffuser
         }
     }
 
-    public bool RequestDiffusion(ScentDiffusionParameters p_params)
+    public bool RequestDiffusion(ScentDiffusionParameters parameters)
     {
         if (OlfyManager.Instance.isReady)
         {
-            BleManager.Instance.Diffuse((int)p_params.Duration, p_params.SlotIndex+"", (int)(p_params.Strength*100), p_params.Frequency, false);
+            BleManager.Instance.Diffuse((int)parameters.Duration, parameters.SlotIndex+"", (int)(parameters.Strength*100), parameters.Frequency, false);
             return true;
         }
         LLogger.E("Olfy was not ready");

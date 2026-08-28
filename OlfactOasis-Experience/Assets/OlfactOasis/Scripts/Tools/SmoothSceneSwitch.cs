@@ -6,16 +6,16 @@ using UnityEngine.SceneManagement;
 public class SmoothSceneSwitch : MonoBehaviour
 {
     [Header("Fade")]
-    [SerializeField] private CanvasGroup m_fadeCanvasGroup;
-    [SerializeField] private float m_fadeDuration = 1f;
+    [SerializeField] private CanvasGroup _fadeCanvasGroup;
+    [SerializeField] private float _fadeDuration = 1f;
 
-    private bool m_isSwitching;
+    private bool _isSwitching;
 
     void Awake()
     {
-        if (m_fadeCanvasGroup == null)
+        if (_fadeCanvasGroup == null)
         {
-            m_fadeCanvasGroup = GetComponentInChildren<CanvasGroup>();
+            _fadeCanvasGroup = GetComponentInChildren<CanvasGroup>();
         }
 
         DontDestroyOnLoad(gameObject);
@@ -34,7 +34,7 @@ public class SmoothSceneSwitch : MonoBehaviour
 
     private void StartSwitch(Func<AsyncOperation> loadScene)
     {
-        if (m_isSwitching)
+        if (_isSwitching)
         {
             return;
         }
@@ -44,7 +44,7 @@ public class SmoothSceneSwitch : MonoBehaviour
 
     private IEnumerator SwitchSceneRoutine(Func<AsyncOperation> loadScene)
     {
-        m_isSwitching = true;
+        _isSwitching = true;
 
         // Fade to black before unloading the current scene.
         yield return Fade(0f, 1f);
@@ -58,35 +58,35 @@ public class SmoothSceneSwitch : MonoBehaviour
         // Fade back in once the new scene has finished loading.
         yield return Fade(1f, 0f);
 
-        m_isSwitching = false;
+        _isSwitching = false;
     }
 
     private IEnumerator Fade(float from, float to)
     {
-        if (m_fadeCanvasGroup == null)
+        if (_fadeCanvasGroup == null)
         {
             yield break;
         }
 
-        m_fadeCanvasGroup.blocksRaycasts = true;
+        _fadeCanvasGroup.blocksRaycasts = true;
 
         float elapsed = 0f;
-        while (elapsed < m_fadeDuration)
+        while (elapsed < _fadeDuration)
         {
             elapsed += Time.deltaTime;
-            SetAlpha(Mathf.Lerp(from, to, elapsed / m_fadeDuration));
+            SetAlpha(Mathf.Lerp(from, to, elapsed / _fadeDuration));
             yield return null;
         }
 
         SetAlpha(to);
-        m_fadeCanvasGroup.blocksRaycasts = to > 0f;
+        _fadeCanvasGroup.blocksRaycasts = to > 0f;
     }
 
     private void SetAlpha(float alpha)
     {
-        if (m_fadeCanvasGroup != null)
+        if (_fadeCanvasGroup != null)
         {
-            m_fadeCanvasGroup.alpha = alpha;
+            _fadeCanvasGroup.alpha = alpha;
         }
     }
 }

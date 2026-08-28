@@ -38,7 +38,7 @@ public class ClipsManager : ScriptableObject
         }
     }
 
-    public static AudioData GetClip(string p_clipID)
+    public static AudioData GetClip(string clipID)
     {
         ClipsManager instance = Instance;
         if (instance == null)
@@ -51,9 +51,9 @@ public class ClipsManager : ScriptableObject
             }
         }
 
-        if (instance._clips.TryGetValue(p_clipID, out AudioData data)) return data;
+        if (instance._clips.TryGetValue(clipID, out AudioData data)) return data;
 
-        LLogger.W($"ClipsManager: no clip registered for ID '{p_clipID}'");
+        LLogger.W($"ClipsManager: no clip registered for ID '{clipID}'");
         return instance._errorClip;
     }
 
@@ -96,7 +96,7 @@ public class ClipsManager : ScriptableObject
     }
 
     [Button("Update List")]
-    void UpdateList(bool p_overwriteExisting = false)
+    void UpdateList(bool overwriteExisting = false)
     {
         if (_clips == null) _clips = new SerializableDictionaryBase<string, AudioData>();
 
@@ -115,7 +115,7 @@ public class ClipsManager : ScriptableObject
             string clipID = withoutExtension.Replace('/', '.').ToLowerInvariant();
 
             bool alreadyExists = _clips.ContainsKey(clipID);
-            if (alreadyExists && !p_overwriteExisting)
+            if (alreadyExists && !overwriteExisting)
             {
                 skippedCount++;
                 continue;

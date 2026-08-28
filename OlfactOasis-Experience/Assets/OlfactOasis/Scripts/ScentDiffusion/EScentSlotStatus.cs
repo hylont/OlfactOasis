@@ -1,4 +1,4 @@
 public enum EScentSlotStatus
 {
-    UNKNOWN, READY, COOLDOWN, EMPTY, ERROR, WORKING
+    Unknown, Ready, Cooldown, Empty, Error, Working
 }

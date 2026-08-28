@@ -1,4 +1,4 @@
 public enum EArgosMood
 {
-    DEFAULT, HAPPY
+    Default, Happy
 }

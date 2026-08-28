@@ -9,9 +9,9 @@ public static class LLogger
 {
     public enum ESeverity
     {
-        INFO,
-        WARNING,
-        ERROR
+        Info,
+        Warning,
+        Error
     }
 
     private const string LOG_FOLDER_NAME = "Logs";
@@ -20,32 +20,32 @@ public static class LLogger
     private const string LOG_LINE_FORMAT = "[{0:yyyy-MM-dd HH:mm:ss}] [{1}] {2}";
     private const float SCREEN_LOG_DURATION_SECONDS = 5f;
 
-    private static readonly object m_lock = new object();
-    private static bool m_hasPurgedOldLogs = false;
+    private static readonly object s_lock = new object();
+    private static bool s_hasPurgedOldLogs = false;
 
     private static string LogDirectory => Path.Combine(Application.persistentDataPath, LOG_FOLDER_NAME);
     private static string CurrentLogFilePath => Path.Combine(LogDirectory, $"{DateTime.Now:yyyy-MM-dd}{LOG_FILE_EXTENSION}");
 
-    public static void L(string p_text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
+    public static void L(string text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
     {
-        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {p_text}", ESeverity.INFO);
+        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {text}", ESeverity.Info);
     }
 
-    public static void W(string p_text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
+    public static void W(string text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
     {
-        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {p_text}", ESeverity.WARNING);
+        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {text}", ESeverity.Warning);
     }
 
-    public static void E(string p_text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
+    public static void E(string text, [CallerMemberName] string callerName = "", [CallerFilePath] string file = "")
     {
-        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {p_text}", ESeverity.ERROR);
+        Log($"[{callerName.ToUpper()}:{Path.GetFileNameWithoutExtension(file).ToUpper()}] {text}", ESeverity.Error);
     }
 
-    private static void Log(string p_text, ESeverity p_severity = ESeverity.INFO)
+    private static void Log(string text, ESeverity severity = ESeverity.Info)
     {
-        lock (m_lock)
+        lock (s_lock)
         {
-            string line = string.Format(LOG_LINE_FORMAT, DateTime.Now, p_severity, p_text);
+            string line = string.Format(LOG_LINE_FORMAT, DateTime.Now, severity, text);
 
             try
             {
@@ -54,10 +54,10 @@ public static class LLogger
                     Directory.CreateDirectory(LogDirectory);
                 }
 
-                if (!m_hasPurgedOldLogs)
+                if (!s_hasPurgedOldLogs)
                 {
                     PurgeOldLogs();
-                    m_hasPurgedOldLogs = true;
+                    s_hasPurgedOldLogs = true;
                 }
 
                 File.AppendAllText(CurrentLogFilePath, line + Environment.NewLine);
@@ -67,12 +67,12 @@ public static class LLogger
                 Debug.LogError($"[LLogger] Failed to write log entry: {e}");
             }
 
-            switch (p_severity)
+            switch (severity)
             {
-                case ESeverity.WARNING:
+                case ESeverity.Warning:
                     Debug.LogWarning(line);
                     break;
-                case ESeverity.ERROR:
+                case ESeverity.Error:
                     Debug.LogError(line);
                     break;
                 default:
@@ -80,7 +80,7 @@ public static class LLogger
                     break;
             }
 #if !UNITY_EDITOR
-            LogOnScreen(p_text, p_severity);
+            LogOnScreen(text, severity);
 #endif
         }
     }
@@ -98,18 +98,18 @@ public static class LLogger
         }
     }
 
-    private static LLoggerGUI m_guiInstance;
+    private static LLoggerGUI s_guiInstance;
 
-    public static void LogOnScreen(string p_text, ESeverity p_severity = ESeverity.INFO)
+    public static void LogOnScreen(string text, ESeverity severity = ESeverity.Info)
     {
-        if (m_guiInstance == null)
+        if (s_guiInstance == null)
         {
             GameObject guiObject = new GameObject(nameof(LLoggerGUI));
             UnityEngine.Object.DontDestroyOnLoad(guiObject);
-            m_guiInstance = guiObject.AddComponent<LLoggerGUI>();
+            s_guiInstance = guiObject.AddComponent<LLoggerGUI>();
         }
 
-        m_guiInstance.ShowMessage(p_text, p_severity, SCREEN_LOG_DURATION_SECONDS);
+        s_guiInstance.ShowMessage(text, severity, SCREEN_LOG_DURATION_SECONDS);
     }
 
     private class LLoggerGUI : MonoBehaviour
@@ -121,32 +121,32 @@ public static class LLogger
             public float ExpireTime;
         }
 
-        private readonly List<ScreenMessage> m_messages = new List<ScreenMessage>();
+        private readonly List<ScreenMessage> _messages = new List<ScreenMessage>();
 
-        public void ShowMessage(string p_text, ESeverity p_severity, float p_duration)
+        public void ShowMessage(string text, ESeverity severity, float duration)
         {
-            m_messages.Add(new ScreenMessage
+            _messages.Add(new ScreenMessage
             {
-                Text = p_text,
-                Severity = p_severity,
-                ExpireTime = Time.time + p_duration
+                Text = text,
+                Severity = severity,
+                ExpireTime = Time.time + duration
             });
         }
 
         private void Update()
         {
-            m_messages.RemoveAll(message => Time.time >= message.ExpireTime);
+            _messages.RemoveAll(message => Time.time >= message.ExpireTime);
         }
 
         private void OnGUI()
         {
-            if (m_messages.Count == 0)
+            if (_messages.Count == 0)
             {
                 return;
             }
 
             GUILayout.BeginArea(new Rect(10, 10, 500, Screen.height - 20));
-            foreach (ScreenMessage message in m_messages)
+            foreach (ScreenMessage message in _messages)
             {
                 Color previousColor = GUI.color;
                 GUI.color = GetSeverityColor(message.Severity);
@@ -156,13 +156,13 @@ public static class LLogger
             GUILayout.EndArea();
         }
 
-        private static Color GetSeverityColor(ESeverity p_severity)
+        private static Color GetSeverityColor(ESeverity severity)
         {
-            switch (p_severity)
+            switch (severity)
             {
-                case ESeverity.WARNING:
+                case ESeverity.Warning:
                     return Color.yellow;
-                case ESeverity.ERROR:
+                case ESeverity.Error:
                     return Color.red;
                 default:
                     return Color.white;
@@ -174,10 +174,10 @@ public static class LLogger
 
 
         [Button("Test Warn")]
-        private void TestWarning() => LLogger.LogOnScreen("This is a warning test text. If you see this, everything is fine", ESeverity.WARNING);
+        private void TestWarning() => LLogger.LogOnScreen("This is a warning test text. If you see this, everything is fine", ESeverity.Warning);
 
 
         [Button("Test Error")]
-        private void TestError() => LLogger.LogOnScreen("This is an error test text. If you see this, everything is fine", ESeverity.ERROR);
+        private void TestError() => LLogger.LogOnScreen("This is an error test text. If you see this, everything is fine", ESeverity.Error);
     }
 }

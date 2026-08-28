@@ -1,4 +1,4 @@
 public enum EScentDiffuserStatus
 {
-    UNKNOWN, DISCONNECTED, CONNECTED, ERROR
+    Unknown, Disconnected, Connected, Error
 }
