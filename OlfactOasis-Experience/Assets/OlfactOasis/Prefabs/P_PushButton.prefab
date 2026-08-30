@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 366527e6764653746a10a80d35b618e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,8 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3507ecc90f4d0064c96abfaf4b88c669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushButton
-  _buttonDownClip: {fileID: 0}
-  _buttonUpClip: {fileID: 0}
+  _buttonDownClip: {fileID: 8300000, guid: b60254dde180b2d429b087a258d64935, type: 3}
+  _buttonUpClip: {fileID: 8300000, guid: 1ace96a736fe4e5488b7fb5629ce2dbb, type: 3}
 --- !u!82 &4540008486184877470
 AudioSource:
   m_ObjectHideFlags: 0
@@ -326,7 +326,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3804194907996007171, guid: 0344d1a3bebcac74a9695d7292c8c988, type: 3}
+  - {fileID: 2100000, guid: d0b35e59d82fe5440ba2c61767e8550e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -437,7 +437,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 366527e6764653746a10a80d35b618e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

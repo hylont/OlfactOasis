@@ -79,9 +79,7 @@ public static class LLogger
                     Debug.Log(line);
                     break;
             }
-#if !UNITY_EDITOR
-            LogOnScreen(text, severity);
-#endif
+            if(Application.isPlaying) LogOnScreenOnly(text, severity);
         }
     }
 
@@ -100,7 +98,7 @@ public static class LLogger
 
     private static LLoggerGUI s_guiInstance;
 
-    public static void LogOnScreen(string text, ESeverity severity = ESeverity.Info)
+    public static void LogOnScreenOnly(string text, ESeverity severity = ESeverity.Info)
     {
         if (s_guiInstance == null)
         {
@@ -170,14 +168,14 @@ public static class LLogger
         }
 
         [Button("Test Info")]
-        private void TestInfo() => LLogger.LogOnScreen("This is an info test text. If you see this, everything is fine");
+        private void TestInfo() => LLogger.LogOnScreenOnly("This is an info test text. If you see this, everything is fine");
 
 
         [Button("Test Warn")]
-        private void TestWarning() => LLogger.LogOnScreen("This is a warning test text. If you see this, everything is fine", ESeverity.Warning);
+        private void TestWarning() => LLogger.LogOnScreenOnly("This is a warning test text. If you see this, everything is fine", ESeverity.Warning);
 
 
         [Button("Test Error")]
-        private void TestError() => LLogger.LogOnScreen("This is an error test text. If you see this, everything is fine", ESeverity.Error);
+        private void TestError() => LLogger.LogOnScreenOnly("This is an error test text. If you see this, everything is fine", ESeverity.Error);
     }
 }

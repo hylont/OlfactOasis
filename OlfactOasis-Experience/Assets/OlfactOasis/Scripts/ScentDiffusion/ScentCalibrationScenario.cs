@@ -1,9 +1,12 @@
+using EditorAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGesturesListener
+public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerGesturesListener
 {
     enum EScenarioStep
     {
@@ -15,6 +18,12 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
         Finished
     }
 
+    [Serializable]
+    class ScentCalibrationResults
+    {
+        public List<ScentData> ScentsData;
+    }
+
     [Header("Protocol config")]
     //1x3, 3x3, 7x3, 20x3, 55x3, 100x3
     public List<float> ScentStrengthsConfigs = new() { .01f, .03f, .07f, .2f, .55f, 1f };
@@ -24,9 +33,6 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
 
     public int NegativeAnswersUntilSkip = 3;
 
-    public List<ScentData> ScentsData = new();
-
-
     [Header("Booths containing a push button")]
     [SerializeField] List<OlfactiveCalibrationBooth> _olfactiveBooths = new();
 
@@ -35,15 +41,15 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
     [SerializeField] Player _player;
     [SerializeField] OlfyHandler _scentDiffuser;
 
-    readonly Dictionary<ScentData, OlfactiveCalibrationBooth> _boothsByScentData = new();
+    [Header("Debug")]
+    [SerializeField] bool _verbose = false;
 
-    EScenarioStep _currentStep;
-    int _currentScentIndex = -1;
+    [ShowInInspector] EScenarioStep _currentStep;
+    [ShowInInspector] int _currentBoothIndex = -1;
     int _currentStrengthIndex;
     int _consecutiveNegativeAnswers;
     int _validScentDataCount;
 
-    ScentData _currentScentData;
     OlfactiveCalibrationBooth _currentBooth;
     OlfactiveCalibrationBooth _approachedBooth;
     ScentDiffusionParameters _currentParameters;
@@ -54,21 +60,14 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
     {
         if (_argos == null || _player == null || _player.Head == null || _scentDiffuser == null || _olfactiveBooths.Count == 0)
         {
-            LLogger.E("ScentEvaluationScenario: missing a required dependency (Argos, Player, Player.Head, ScentDiffuser or booths).");
+            LLogger.E("ScentCalibrationScenario: missing a required dependency (Argos, Player, Player.Head, ScentDiffuser or booths).");
             enabled = false;
             return;
         }
 
-        foreach (OlfactiveCalibrationBooth booth in _olfactiveBooths)
-        {
-            _boothsByScentData[booth.ScentData] = booth;
-            booth.PushButton.AddListener(this);
-        }
-
         _player.AddListener(this);
 
-        ScentsData = _olfactiveBooths.Select(booth => booth.ScentData).ToList();
-        RandomizeScentsDataOrder();
+        RandomizeBoothsOrder();
 
         StartBoothIntroduction(0);
     }
@@ -94,34 +93,46 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
         if (nearbyBooth != null) OnBoothApproached(nearbyBooth);
     }
 
-    private void RandomizeScentsDataOrder()
+    // Shuffles which booth is visited in which order (the 6 strengths within a booth stay in order).
+    private void RandomizeBoothsOrder()
     {
-        for (int shuffleIndex = ScentsData.Count - 1; shuffleIndex > 0; shuffleIndex--)
+        for (int shuffleIndex = _olfactiveBooths.Count - 1; shuffleIndex > 0; shuffleIndex--)
         {
-            int swapIndex = Random.Range(0, shuffleIndex + 1);
-            (ScentsData[shuffleIndex], ScentsData[swapIndex]) = (ScentsData[swapIndex], ScentsData[shuffleIndex]);
+            int swapIndex = UnityEngine.Random.Range(0, shuffleIndex + 1);
+            (_olfactiveBooths[shuffleIndex], _olfactiveBooths[swapIndex]) = (_olfactiveBooths[swapIndex], _olfactiveBooths[shuffleIndex]);
         }
     }
 
-    // Step 1: Argos looks at the booth, it appears clearly while the others fade out, and the intro line plays.
-    void StartBoothIntroduction(int scentIndex)
+    void SetStep(EScenarioStep newStep)
     {
-        _currentScentIndex = scentIndex;
-        _currentScentData = ScentsData[scentIndex];
-        _currentBooth = _boothsByScentData[_currentScentData];
+        if (_verbose) LLogger.LogOnScreenOnly($"ScentCalibrationScenario: {_currentStep} => {newStep}.\n" +
+            $"{(_currentBooth == null ? "No booth selected" : $"({_currentBooth.name}) : {_currentBooth.ScentData.Name}")}");
+        _currentStep = newStep;
+    }
+
+    // Step 1: Argos looks at the booth, it appears clearly while the others fade out, and the intro line plays.
+    void StartBoothIntroduction(int boothIndex)
+    {
+        _currentBoothIndex = boothIndex;
+        _currentBooth = _olfactiveBooths[boothIndex];
         _approachedBooth = null;
 
         _argos.LookAt(_currentBooth.transform);
 
         foreach (OlfactiveCalibrationBooth booth in _olfactiveBooths)
         {
-            if (booth == _currentBooth) booth.Appear();
+            booth.PushButton.RemoveListener(this);
+            if (booth == _currentBooth)
+            {
+                booth.PushButton.AddListener(this);
+                booth.Appear();
+            }
             else booth.Disappear();
         }
 
         _argos.Talk("argos.calibration.ordreatelier");
 
-        _currentStep = EScenarioStep.WaitingForApproach;
+        SetStep(EScenarioStep.WaitingForApproach);
     }
 
     OlfactiveCalibrationBooth FindNearbyBooth()
@@ -136,17 +147,14 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
         return null;
     }
 
-    // Step 2: the player approached a booth, tell them whether it's the right one.
+    // Step 2: the player approached a booth
     void OnBoothApproached(OlfactiveCalibrationBooth booth)
     {
         if (booth == _currentBooth)
         {
             _argos.Talk("argos.calibration.ordrebouton");
-            _currentStep = EScenarioStep.WaitingForButtonPress;
-        }
-        else
-        {
-            _argos.Talk("argos.calibration.mauvaisatelier");
+
+            SetStep(EScenarioStep.WaitingForButtonPress);
         }
     }
 
@@ -161,11 +169,13 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
     {
     }
 
-    // Step 3: diffuse the current strength config for this scent.
+    // Step 3: diffuse the current strength config for this booth's scent.
     void DiffuseCurrentStrength()
     {
+        ScentData currentScentData = _currentBooth.ScentData;
+
         float strength = ScentStrengthsConfigs[_currentStrengthIndex];
-        _currentParameters = new ScentDiffusionParameters(_currentScentData.SlotIndex, strength, ScentDuration, _currentScentData.DefaultVibrationFrequency);
+        _currentParameters = new ScentDiffusionParameters(currentScentData.SlotIndex, strength, ScentDuration, currentScentData.DefaultVibrationFrequency);
 
         _wasPerceived = EUserResponse.NeutralUndecided;
         _wasPleasant = EUserResponse.NeutralUndecided;
@@ -173,7 +183,7 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
         if (_currentBooth.DiffusionVFX != null) _currentBooth.DiffusionVFX.Play();
         _scentDiffuser.RequestDiffusion(_currentParameters);
 
-        _currentStep = EScenarioStep.Diffusing;
+        SetStep(EScenarioStep.Diffusing);
         StartCoroutine(WaitForPerceptionQuestionRoutine());
     }
 
@@ -182,8 +192,8 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
     {
         yield return new WaitForSeconds(PerceptionQuestionDelay);
 
-        _argos.Talk("argos.calibration.questionodeurpercue");
-        _currentStep = EScenarioStep.WaitingPerceivedAnswer;
+        _argos.Talk("argos.calibration.questionperception");
+        SetStep(EScenarioStep.WaitingPerceivedAnswer);
     }
 
     public void OnGesturePerformed(EPlayerGesture gesture, ESide side, Ray direction = default)
@@ -218,7 +228,7 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
             case EPlayerGesture.ThumbUp:
                 _wasPerceived = EUserResponse.Positive;
                 _argos.Talk("argos.calibration.questionagreable");
-                _currentStep = EScenarioStep.WaitingPleasantAnswer;
+                SetStep(EScenarioStep.WaitingPleasantAnswer);
                 break;
         }
     }
@@ -250,8 +260,6 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
     // Steps 8-9: prompt the intensity curve, then record it (test values until the real tracing input exists).
     void RecordResponseCurve()
     {
-        _argos.Talk("argos.calibration.boutonserreur");
-
         List<Vector3> testCurvePoints = new()
         {
             new Vector3(0f, 0f, 0f),
@@ -262,13 +270,14 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
         };
 
         CompleteTrial(testCurvePoints);
+
     }
 
-    // Step 10: store the trial, then either move to the next strength or the next booth.
+    // Step 10: store the trial on the booth's own ScentData, then either move to the next strength or the next booth.
     void CompleteTrial(List<Vector3> curvePoints = null)
     {
         ScentEvaluation evaluation = new(_currentParameters, _wasPerceived, _wasPleasant, curvePoints ?? new List<Vector3>());
-        _currentScentData.Evaluations.Add(evaluation);
+        _currentBooth.ScentData.Evaluations.Add(evaluation);
 
         _consecutiveNegativeAnswers = _wasPleasant == EUserResponse.Negative ? _consecutiveNegativeAnswers + 1 : 0;
 
@@ -279,7 +288,9 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
 
         if (!allStrengthsDone && !tooManyNegativeAnswers)
         {
-            _currentStep = EScenarioStep.WaitingForButtonPress;
+            SetStep(EScenarioStep.WaitingForButtonPress);
+
+            _argos.Talk("argos.calibration.ordrebouton");
             return;
         }
 
@@ -288,14 +299,14 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
 
     void MoveToNextBooth()
     {
-        if (_currentScentData.GetValidity()) _validScentDataCount++;
+        if (_currentBooth.ScentData.GetValidity()) _validScentDataCount++;
 
         _currentStrengthIndex = 0;
         _consecutiveNegativeAnswers = 0;
 
-        int nextScentIndex = _currentScentIndex + 1;
-        bool allBoothsVisited = nextScentIndex >= ScentsData.Count;
-        bool enoughValidScents = _validScentDataCount >= ScentsData.Count;
+        int nextBoothIndex = _currentBoothIndex + 1;
+        bool allBoothsVisited = nextBoothIndex >= _olfactiveBooths.Count;
+        bool enoughValidScents = _validScentDataCount >= _olfactiveBooths.Count;
 
         if (allBoothsVisited || enoughValidScents)
         {
@@ -303,16 +314,37 @@ public class ScentEvaluationScenario : MonoBehaviour, IButtonListener, IPlayerGe
             return;
         }
 
-        StartBoothIntroduction(nextScentIndex);
+        StartBoothIntroduction(nextBoothIndex);
     }
 
     void EndScenario()
     {
-        _currentStep = EScenarioStep.Finished;
+        SetStep(EScenarioStep.Finished);
         _argos.StopLookAt();
 
         foreach (OlfactiveCalibrationBooth booth in _olfactiveBooths) booth.Disappear();
 
-        LLogger.L($"ScentEvaluationScenario: scenario termine avec {_validScentDataCount} odeur(s) valide(s) sur {ScentsData.Count}.");
+        SaveResultsToJson();
+    }
+
+    // The scenario doesn't own scent data - it just collects what each booth gathered and persists it.
+    void SaveResultsToJson()
+    {
+        ScentCalibrationResults results = new() { ScentsData = _olfactiveBooths.Select(booth => booth.ScentData).ToList() };
+        string json = JsonUtility.ToJson(results, true);
+
+        string directory = Path.Combine(Application.persistentDataPath, "ScentCalibrationResults");
+        string path = Path.Combine(directory, $"{DateTime.Now:yyyyMMdd_HHmmss}.json");
+
+        try
+        {
+            Directory.CreateDirectory(directory);
+            File.WriteAllText(path, json);
+            LLogger.L($"ScentCalibrationScenario: results saved to {path}");
+        }
+        catch (Exception e)
+        {
+            LLogger.E($"ScentCalibrationScenario: failed to save results - {e}");
+        }
     }
 }

@@ -2,18 +2,14 @@ using EditorAttributes;
 using Olfy;
 using RotaryHeart.Lib.SerializableDictionary;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OlfyHandler : MonoBehaviour, IScentDiffuser
+public partial class OlfyHandler : MonoBehaviour, IScentDiffuser
 {
-
-    [Serializable]
-    public class ScentSlotData
-    {
-        public EScentSlotStatus Status = EScentSlotStatus.Unknown;
-        public TextMeshProUGUI DebugText;
-    }
 
     [SerializeField]
     ScentDiffusionParameters _testScent = new ScentDiffusionParameters(1, .5f, 3f);
@@ -28,6 +24,9 @@ public class OlfyHandler : MonoBehaviour, IScentDiffuser
     [SerializeField] private OlfyManager _olfyManager;
     [SerializeField] private BleManager _bluetoothManager;
 
+    [Header("Config")]
+    [SerializeField] int _nbSlots = 3;
+
     [Header("Debug")]
 
     [SerializeField] private TextMeshProUGUI _debugText;
@@ -39,8 +38,12 @@ public class OlfyHandler : MonoBehaviour, IScentDiffuser
         { EScentSlotStatus.Cooldown, Color.yellow },
         { EScentSlotStatus.Empty, Color.red },
         { EScentSlotStatus.Error, Color.magenta },
-        { EScentSlotStatus.Working, Color.cyan }
+        { EScentSlotStatus.Diffusing, Color.cyan }
     };
+    [SerializeField] bool _ignoreNotConnected = false;
+    [SerializeField] SerializableDictionaryBase<int, Image> _slotsVisuals;
+
+    Dictionary<int, ScentSlotData> _slots = new();
 
     void Start()
     {
@@ -53,17 +56,57 @@ public class OlfyHandler : MonoBehaviour, IScentDiffuser
             }
             return;
         }
+
+        for(int idxSlot = 1; idxSlot <= _nbSlots; idxSlot++)
+        {
+            _slots.Add(idxSlot, new ScentSlotData(EScentSlotStatus.Unknown));
+        }
+    }
+
+    void Update()
+    {
+        UpdateSlotColors();
+    }
+
+    void UpdateSlotColors()
+    {
+        foreach(var slot in _slots)
+        {
+            _statusColors.TryGetValue(slot.Value.Status, out Color newColor);
+            _slotsVisuals[slot.Key].color = newColor;
+        }
     }
 
     public bool RequestDiffusion(ScentDiffusionParameters parameters)
     {
+
         if (OlfyManager.Instance.isReady)
         {
+            HandleDiffusion(parameters);
+
             BleManager.Instance.Diffuse((int)parameters.Duration, parameters.SlotIndex+"", (int)(parameters.Strength*100), parameters.Frequency, false);
             return true;
         }
-        LLogger.E("Olfy was not ready");
-        return false;
+        else
+        {
+            if (_ignoreNotConnected) HandleDiffusion(parameters);
+            
+            LLogger.E("Olfy was not ready");
+            return false;
+        }
+    }
+
+    private void HandleDiffusion(ScentDiffusionParameters parameters)
+    {
+        _slots[parameters.SlotIndex].Status = EScentSlotStatus.Diffusing;
+
+        StartCoroutine(HandleStopDiffusion_Coroutine(parameters));
+    }
+
+    IEnumerator HandleStopDiffusion_Coroutine(ScentDiffusionParameters parameters)
+    {
+        yield return new WaitForSeconds(parameters.Duration);
+        _slots[parameters.SlotIndex].Status = EScentSlotStatus.Ready;
     }
 
     public ScentDiffuserDeviceInfo GetDeviceStatus()
