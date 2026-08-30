@@ -1,3 +1,5 @@
+/Voices/Voicelines Project/Samples
+
 # This .gitignore lives at the repo root, but the Unity project itself is
 # in the OlfactOasis-Experience/ subfolder (the root also holds Blender
 # files, References/, etc. that are NOT part of the Unity project).

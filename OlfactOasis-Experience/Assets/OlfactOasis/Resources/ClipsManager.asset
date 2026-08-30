@@ -96,21 +96,27 @@ MonoBehaviour:
     - Clip: {fileID: 8300000, guid: 728ec5e025b4ae642b96f71cb8c7b803, type: 3}
       AsText: 
     - Clip: {fileID: 8300000, guid: 7845c671af7b16d41a7e49dcc90007b4, type: 3}
-      AsText: 
+      AsText: "On va tester plusieurs odeurs ensemble, et plusieurs fois chacune.
+        Voil\xE0 comment \xE7a marche : tu vas aller \xE0 l'atelier olfactif o\xF9
+        il y aura un bouton, et tu pourras appuyer dessus quand tu es pr\xEAt...."
     - Clip: {fileID: 8300000, guid: db0b62dfde6aac44694380b6f81e0eed, type: 3}
-      AsText: 
+      AsText: "Ok c'est bien compris ! On peut aller \xE0 la suivante."
     - Clip: {fileID: 8300000, guid: 68ee93dc54c4c98439f555c9ec504bee, type: 3}
-      AsText: 
+      AsText: Parfait ! Maintenant tu peux aller au prochain atelier visible.
     - Clip: {fileID: 8300000, guid: 22a060dfb6cb37343be24bafd77ee2b9, type: 3}
-      AsText: 
+      AsText: "D\xE8s que tu seras pr\xEAt, appuies sur le bouton. Prends le temps
+        que tu veux, ne t'inqui\xE8tes pas."
     - Clip: {fileID: 8300000, guid: 4aa56c085996e1f46a2975e0927161e4, type: 3}
-      AsText: 
+      AsText: "Et selon toi, c'\xE9tait plut\xF4t agr\xE9able, d\xE9sagr\xE9able,
+        ou tu ne sais pas trop ?"
     - Clip: {fileID: 8300000, guid: 5fcfc0f632769ca4fb3b866b0058613c, type: 3}
-      AsText: 
+      AsText: Alors dis-moi, est-ce que tu as senti quelque-chose ?
     - Clip: {fileID: 8300000, guid: 24bd1c8c8b4333a4ab37801fbeef162d, type: 3}
-      AsText: 
+      AsText: "Ravi que \xE7a t'aie plu ! Pour me dire \xE0 quel point, trace une
+        ligne de la taille que tu veux."
     - Clip: {fileID: 8300000, guid: 72cf318769b163d48b70e661f79f9cb2, type: 3}
-      AsText: 
+      AsText: "Argh je suis d\xE9sol\xE9, trace une ligne pour me dire \xE0 quel
+        point tu n'as pas aim\xE9, puis utilise les boutons retracer et confirmer."
   _errorClip:
     Clip: {fileID: 0}
     AsText: 
