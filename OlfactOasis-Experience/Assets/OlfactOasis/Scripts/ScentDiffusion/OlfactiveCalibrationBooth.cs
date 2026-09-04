@@ -9,6 +9,8 @@ public class OlfactiveCalibrationBooth : MonoBehaviour
 
     public ScentData ScentData;
 
+    public AbstractCurveDrawingMethod CurveDrawingMethod;
+
     [Header("Visibility")]
     [SerializeField] Renderer[] _renderers;
     [SerializeField] float _transparentAlpha = 0.15f;
@@ -22,6 +24,8 @@ public class OlfactiveCalibrationBooth : MonoBehaviour
     Color[] _baseColors;
     Coroutine _fadeCoroutine;
     float _currentAlpha = 1f;
+
+    public Transform TextSpawnAnchor;
 
     void Awake()
     {
@@ -38,6 +42,11 @@ public class OlfactiveCalibrationBooth : MonoBehaviour
         for (int i = 0; i < _renderers.Length; i++)
         {
             _baseColors[i] = GetRendererColor(_renderers[i]);
+        }
+
+        if(CurveDrawingMethod == null)
+        {
+            LLogger.E($"CurveDrawingMethod is not assigned !");
         }
     }
 

@@ -37,7 +37,8 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
     [SerializeField] List<OlfactiveCalibrationBooth> _olfactiveBooths = new();
 
     [Header("Dependencies")]
-    [SerializeField] ArgosAI _argos;
+    [SerializeField] GameObject _clipsReceiverGameObject;
+    IClipsReceiver _clipsReceiver;
     [SerializeField] Player _player;
     [SerializeField] OlfyHandler _scentDiffuser;
 
@@ -58,7 +59,12 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
 
     void Start()
     {
-        if (_argos == null || _player == null || _player.Head == null || _scentDiffuser == null || _olfactiveBooths.Count == 0)
+        if(!_clipsReceiverGameObject.TryGetComponent(out _clipsReceiver))
+        {
+            LLogger.E("ScentCalibrationScenario: ClipsReceiver does not have a valid IClipsReceiver component.");
+        }
+
+        if (_clipsReceiver == null || _player == null || _player.Head == null || _scentDiffuser == null || _olfactiveBooths.Count == 0)
         {
             LLogger.E("ScentCalibrationScenario: missing a required dependency (Argos, Player, Player.Head, ScentDiffuser or booths).");
             enabled = false;
@@ -117,7 +123,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
         _currentBooth = _olfactiveBooths[boothIndex];
         _approachedBooth = null;
 
-        _argos.LookAt(_currentBooth.transform);
+        //_argos.LookAt(_currentBooth.transform);
 
         foreach (OlfactiveCalibrationBooth booth in _olfactiveBooths)
         {
@@ -130,7 +136,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
             else booth.Disappear();
         }
 
-        _argos.Talk("argos.calibration.ordreatelier");
+        _clipsReceiver.HandleClip("argos.calibration.ordreatelier", null);
 
         SetStep(EScenarioStep.WaitingForApproach);
     }
@@ -152,7 +158,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
     {
         if (booth == _currentBooth)
         {
-            _argos.Talk("argos.calibration.ordrebouton");
+            _clipsReceiver.HandleClip("argos.calibration.ordrebouton");
 
             SetStep(EScenarioStep.WaitingForButtonPress);
         }
@@ -192,7 +198,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
     {
         yield return new WaitForSeconds(PerceptionQuestionDelay);
 
-        _argos.Talk("argos.calibration.questionperception");
+        _clipsReceiver.HandleClip("argos.calibration.questionperception", _currentBooth.TextSpawnAnchor);
         SetStep(EScenarioStep.WaitingPerceivedAnswer);
     }
 
@@ -227,7 +233,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
 
             case EPlayerGesture.ThumbUp:
                 _wasPerceived = EUserResponse.Positive;
-                _argos.Talk("argos.calibration.questionagreable");
+                _clipsReceiver.HandleClip("argos.calibration.questionagreable", _currentBooth.TextSpawnAnchor);
                 SetStep(EScenarioStep.WaitingPleasantAnswer);
                 break;
         }
@@ -245,13 +251,13 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
 
             case EPlayerGesture.ThumbUp:
                 _wasPleasant = EUserResponse.Positive;
-                _argos.Talk("argos.calibration.reponseagreable");
+                _clipsReceiver.HandleClip("argos.calibration.reponseagreable", _currentBooth.TextSpawnAnchor);
                 RecordResponseCurve();
                 break;
 
             case EPlayerGesture.ThumbDown:
                 _wasPleasant = EUserResponse.Negative;
-                _argos.Talk("argos.calibration.reponsedesagreable");
+                _clipsReceiver.HandleClip("argos.calibration.reponsedesagreable", _currentBooth.TextSpawnAnchor);
                 RecordResponseCurve();
                 break;
         }
@@ -260,22 +266,13 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
     // Steps 8-9: prompt the intensity curve, then record it (test values until the real tracing input exists).
     void RecordResponseCurve()
     {
-        List<Vector3> testCurvePoints = new()
-        {
-            new Vector3(0f, 0f, 0f),
-            new Vector3(1f, 0.3f, 0f),
-            new Vector3(2f, 0.8f, 0f),
-            new Vector3(3f, 0.4f, 0f),
-            new Vector3(4f, 0.1f, 0f)
-        };
-
-        CompleteTrial(testCurvePoints);
-
+        _currentBooth.CurveDrawingMethod.StartDraw(() => CompleteTrial());
     }
 
     // Step 10: store the trial on the booth's own ScentData, then either move to the next strength or the next booth.
-    void CompleteTrial(List<Vector3> curvePoints = null)
+    void CompleteTrial()
     {
+        List<Vector3> curvePoints = _currentBooth.CurveDrawingMethod.GetPoints();
         ScentEvaluation evaluation = new(_currentParameters, _wasPerceived, _wasPleasant, curvePoints ?? new List<Vector3>());
         _currentBooth.ScentData.Evaluations.Add(evaluation);
 
@@ -290,7 +287,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
         {
             SetStep(EScenarioStep.WaitingForButtonPress);
 
-            _argos.Talk("argos.calibration.ordrebouton");
+            _clipsReceiver.HandleClip("argos.calibration.ordrebouton", null);
             return;
         }
 
@@ -320,7 +317,7 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
     void EndScenario()
     {
         SetStep(EScenarioStep.Finished);
-        _argos.StopLookAt();
+        //_argos.StopLookAt();
 
         foreach (OlfactiveCalibrationBooth booth in _olfactiveBooths) booth.Disappear();
 

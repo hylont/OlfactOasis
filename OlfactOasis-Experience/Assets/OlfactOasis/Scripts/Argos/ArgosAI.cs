@@ -4,7 +4,14 @@ using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections;
 using UnityEngine;
 
-public class ArgosAI : MovementAI
+public interface IClipsReceiver
+{
+    void HandleClip(string clipID);
+    void HandleClip(string clipID, Transform target);
+    void StopClip(string clipID);
+}
+
+public class ArgosAI : MovementAI, IClipsReceiver
 {
     [Header("Argos config")]
     [SerializeField] bool _powerOnAtStart = false;
@@ -102,25 +109,38 @@ public class ArgosAI : MovementAI
 
         Animator.SetBool(_poweredAnim, true);
 
-        Talk("argos.introduction.consignepause");
+        HandleClip("argos.introduction.consignepause");
     }
 
-    public void Talk(string clipID)
+    public void HandleClip(string clipID)
     {
-        if(TalkingAudioSource == null)
-        {
-            LLogger.E("No audio source, Argos can't talk !");
-            return;
-        }
-
-        if(AudioDescription == null)
-        {
-            LLogger.E("No audio description target set !");
-            return;
-        }
+        if (CheckClipDependencies() == false) return;
 
         AudioDescription.Show(ClipsManager.GetClip(clipID));
+    }
 
+    private bool CheckClipDependencies()
+    {
+        if (TalkingAudioSource == null)
+        {
+            LLogger.E("No audio source, Argos can't talk !");
+            return false;
+        }
+
+        if (AudioDescription == null)
+        {
+            LLogger.E("No audio description target set !");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void StopClip(string clipID)
+    {
+        if (CheckClipDependencies() == false) return;
+
+        AudioDescription.Hide();
     }
 
     int ResolveBlendShapeIndex(SkinnedMeshRenderer renderer, string blendShapeName)
@@ -322,5 +342,10 @@ public class ArgosAI : MovementAI
         {
             RightPupil.transform.localPosition = _rightPupilRestPosition + new Vector3(face.RPupilPositionOffset.x, face.RPupilPositionOffset.y, 0f);
         }
+    }
+
+    public void HandleClip(string clipID, Transform target)
+    {
+        HandleClip(clipID);
     }
 }
