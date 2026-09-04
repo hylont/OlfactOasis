@@ -45,6 +45,12 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
     [Header("Debug")]
     [SerializeField] bool _verbose = false;
 
+    [Header("Python data reader")]
+    [SerializeField] string _pythonExecutable = "python";
+    [SerializeField] string _dataReaderScriptRelativePath = "../../OlfactoasisDataReader.py";
+    [SerializeField] bool _openDataAtEachEvaluation = true;
+    [SerializeField] bool _openDataAtCalibrationEnd = true;
+
     [ShowInInspector] EScenarioStep _currentStep;
     [ShowInInspector] int _currentBoothIndex = -1;
     int _currentStrengthIndex;
@@ -296,6 +302,8 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
 
     void MoveToNextBooth()
     {
+        ExportCurrentBoothEvaluations();
+
         if (_currentBooth.ScentData.GetValidity()) _validScentDataCount++;
 
         _currentStrengthIndex = 0;
@@ -312,6 +320,18 @@ public class ScentCalibrationScenario : MonoBehaviour, IButtonListener, IPlayerG
         }
 
         StartBoothIntroduction(nextBoothIndex);
+    }
+
+    // The current booth's odor has just been fully evaluated (every strength tried, or skipped) - persist it and optionally graph it.
+    void ExportCurrentBoothEvaluations()
+    {
+        string directory = Path.Combine(Application.persistentDataPath, "ScentCalibrationResults");
+        string csvPath = ScentEvaluationCsvExporter.Save(_currentBooth.ScentData, directory);
+
+        if (csvPath != null && _openDataAtEachEvaluation)
+        {
+            ScentEvaluationCsvExporter.LaunchDataReader(_pythonExecutable, _dataReaderScriptRelativePath, csvPath, _currentBooth.ScentData.Name);
+        }
     }
 
     void EndScenario()
