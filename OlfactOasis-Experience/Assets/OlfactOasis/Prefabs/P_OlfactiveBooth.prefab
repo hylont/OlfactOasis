@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5538889166845584080}
   - component: {fileID: -3870929237105739242}
-  - component: {fileID: 7477503331948371905}
   m_Layer: 0
   m_Name: P_OlfactiveBooth
   m_TagString: Untagged
@@ -90,77 +89,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!114 &7477503331948371905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4912488126503228234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496631878d92baa4085d5d59d32295d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactiveCalibrationBooth
-  PushButton: {fileID: 7595609247820700898}
-  DiffusionVFX: {fileID: 1913549476131150162}
-  ScentData:
-    Name: 0
-    SlotIndex: 1
-    DefaultVibrationFrequency: 11000
-    Evaluations: []
-    MildParameters:
-      SlotIndex: 0
-      Strength: 0
-      Duration: 0
-      Frequency: 0
-    OptimalParameters:
-      SlotIndex: 0
-      Strength: 0
-      Duration: 0
-      Frequency: 0
-    StrongParameters:
-      SlotIndex: 0
-      Strength: 0
-      Duration: 0
-      Frequency: 0
-  CurveDrawingMethod: {fileID: 0}
-  _printerAnimator: {fileID: 4783665660629243642}
-  _printerTriggerName: Print
-  _printDuration: 3
-  _vialCollider: {fileID: 9134614804283303630}
-  _renderers:
-  - {fileID: 4857351673875810637}
-  - {fileID: 5232493383222944181}
-  - {fileID: 3020941533554959911}
-  - {fileID: 1287133943436436777}
-  _transparentAlpha: 0.15
-  _fadeDuration: 0.5
-  _fadeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  TextSpawnAnchor: {fileID: 773522636752648173}
 --- !u!1 &7222267923410365204
 GameObject:
   m_ObjectHideFlags: 0
@@ -5148,37 +5076,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 442743a844ea15b45b4e425e499c97cd, type: 3}
---- !u!23 &1287133943436436777 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2143466728376583659, guid: 442743a844ea15b45b4e425e499c97cd, type: 3}
-  m_PrefabInstance: {fileID: 892783798723354818}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &3020941533554959911 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2706457162638771941, guid: 442743a844ea15b45b4e425e499c97cd, type: 3}
-  m_PrefabInstance: {fileID: 892783798723354818}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4621960263036574331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5496448166798899897, guid: 442743a844ea15b45b4e425e499c97cd, type: 3}
   m_PrefabInstance: {fileID: 892783798723354818}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &5232493383222944181 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4971484846950236535, guid: 442743a844ea15b45b4e425e499c97cd, type: 3}
-  m_PrefabInstance: {fileID: 892783798723354818}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7595609247820700898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7280852185135938592, guid: 442743a844ea15b45b4e425e499c97cd, type: 3}
-  m_PrefabInstance: {fileID: 892783798723354818}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3507ecc90f4d0064c96abfaf4b88c669, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PushButton
 --- !u!1001 &3578729072174037702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5429,10 +5331,5 @@ PrefabInstance:
 --- !u!4 &2833337518651385953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7359510248759130023, guid: bd5aac650fb784847a29b3a9317d7e57, type: 3}
-  m_PrefabInstance: {fileID: 4715324756539400134}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &9134614804283303630 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 4590462310622329096, guid: bd5aac650fb784847a29b3a9317d7e57, type: 3}
   m_PrefabInstance: {fileID: 4715324756539400134}
   m_PrefabAsset: {fileID: 0}

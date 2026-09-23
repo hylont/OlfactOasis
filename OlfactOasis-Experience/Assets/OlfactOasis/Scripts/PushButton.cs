@@ -43,17 +43,17 @@ public class PushButton : MonoBehaviour
         _listeners.Remove(listener);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("FingerTip"))
+        if (other.gameObject.CompareTag("FingerTip"))
         {
             OnButtonDown();
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("FingerTip"))
+        if (other.gameObject.CompareTag("FingerTip"))
         {
             OnButtonUp();
         }

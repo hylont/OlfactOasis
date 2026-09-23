@@ -27,10 +27,10 @@ public abstract class AbstractCurveDrawingMethod : MonoBehaviour
     protected abstract void OnEndDraw();
 
     protected abstract void OnStartDraw();
+    public virtual void ClearPoints() => points.Clear();
 
     protected void AddPoint(Vector3 point) => points.Add(point);
 
-    protected void ClearPoints() => points.Clear();
 
     protected int PointCount => points.Count;
 

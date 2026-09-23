@@ -11,6 +11,11 @@ public class ScentEvaluation
     public List<Vector3> ResponseCurvePoints;
     public float ResponseMagnitude;
 
+    public ScentEvaluation()
+    {
+
+    }
+
     public ScentEvaluation(ScentDiffusionParameters parameters, EUserResponse wasPerceived, EUserResponse wasPleasant, List<Vector3> responseCurvePoints)
     {
         Parameters = parameters;

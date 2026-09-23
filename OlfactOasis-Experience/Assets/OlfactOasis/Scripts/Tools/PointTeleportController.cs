@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,8 +8,10 @@ using UnityEngine.Events;
 public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
 {
     [Header("Dependencies")]
+    [SerializeField] GameObject _playerRig;
     [SerializeField] Player _player;
     [SerializeField] LineRenderer _pointingRayLine;
+    [SerializeField] ScreenFader _screenFader;
 
     [Header("Config")]
     [SerializeField] string _walkableTag = "WALKABLE";
@@ -15,22 +19,31 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
 
     public UnityEvent OnTeleported;
 
+    public bool IsTeleporting = false;
+
     void Start()
     {
         if (_player == null) _player = Player.Instance;
 
         if (_player == null)
         {
-            LLogger.E("PointTeleportController: no Player found.");
+            LLogger.E("no Player found.");
             enabled = false;
             return;
         }
 
         _player.AddListener(this);
 
-        if(_pointingRayLine == null)
+        if(_playerRig == null)
         {
-            LLogger.W("PointTeleportController: no LineRenderer assigned for the pointing ray.");
+            LLogger.E("no Player Rig assigned.");
+            enabled = false;
+            return;
+        }
+
+        if (_pointingRayLine == null)
+        {
+            LLogger.W("no LineRenderer assigned for the pointing ray.");
         }
         else
         {
@@ -45,7 +58,7 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
 
     public void OnGesturePerformed(EPlayerGesture gesture, ESide side, Ray direction = default)
     {
-        if (gesture != EPlayerGesture.Pointing) return;
+        if (gesture != EPlayerGesture.Pointing || IsTeleporting) return;
 
         if (!Physics.Raycast(direction, out RaycastHit hit, _maxDistance))
         {
@@ -65,8 +78,28 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
             _pointingRayLine.SetPosition(0, direction.origin);
             _pointingRayLine.SetPosition(1, hit.point);
         }
-        _player.transform.position = hit.point;
+
+        StartCoroutine(TeleportAfterDelay(hit.collider.gameObject.transform.position, _screenFader.FadeDuration));
 
         OnTeleported?.Invoke();
+    }
+
+    private IEnumerator TeleportAfterDelay(Vector3 point, float fadeDuration)
+    {
+        IsTeleporting = true;
+
+        _screenFader.FadeToBlack();
+        yield return new WaitForSeconds(fadeDuration);
+
+        if (_pointingRayLine != null)
+        {
+            _pointingRayLine.enabled = false;
+            _pointingRayLine.SetPositions(new Vector3[] { });
+        }
+
+        _screenFader.FadeToHidden();
+        
+        _playerRig.transform.position = point;
+        IsTeleporting = false;
     }
 }

@@ -593,7 +593,7 @@ MonoBehaviour:
   _talkingSampleWindow: 256
   _talkingSensitivity: 12
   _talkingSmoothSpeed: 15
-  _mouthScaleAmount: 15
+  _mouthScaleAmount: 5
   LeftPupil: {fileID: 759242340832583841}
   RightPupil: {fileID: 9151149926774269743}
   LeftEye: {fileID: 1101046377904004413}

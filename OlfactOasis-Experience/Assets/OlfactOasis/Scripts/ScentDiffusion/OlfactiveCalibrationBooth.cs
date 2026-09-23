@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OlfactiveCalibrationBooth : MonoBehaviour
 {
-    public PushButton PushButton;
+    public PushButton ConfirmButton;
     public ParticleSystem DiffusionVFX;
 
     public ScentData ScentData;
@@ -70,7 +70,7 @@ public class OlfactiveCalibrationBooth : MonoBehaviour
     {
         if (_vialCollider != null) _vialCollider.enabled = false;
 
-        if (_printerAnimator != null) _printerAnimator.SetTrigger(_printerTriggerName);
+        if (_printerAnimator != null) _printerAnimator.SetBool(_printerTriggerName, true);
 
         StartCoroutine(PrintRoutine(onPrinted));
     }

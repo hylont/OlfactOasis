@@ -25,6 +25,8 @@ your own risk.
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections;
+
 
 #if UNITY_2018_3_OR_NEWER
 #if UNITY_ANDROID

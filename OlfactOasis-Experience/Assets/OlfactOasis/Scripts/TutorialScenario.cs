@@ -123,15 +123,8 @@ public partial class TutorialScenario : MonoBehaviour, IPlayerGesturesListener
 
     private void OnGrabbed(PointerEvent @event)
     {
-        if(@event.Type != PointerEventType.Select) return;
+        if(@event.Type != PointerEventType.Select || _currentStep != ETutorialStep.Grab) return;
         
-        SetStep(ETutorialStep.ThumbUp);
-    }
-
-    public void OnGrabbed()
-    {
-        if (_currentStep != ETutorialStep.Grab) return;
-
         SetStep(ETutorialStep.ThumbUp);
     }
 
@@ -171,6 +164,12 @@ public partial class TutorialScenario : MonoBehaviour, IPlayerGesturesListener
     {
         if (_currentStep != ETutorialStep.Teleport) return;
 
+        SetStep(ETutorialStep.Finished);
+    }
+
+    [Button("Force tutorial complete")]
+    public void CompleteTutorial()
+    {
         SetStep(ETutorialStep.Finished);
     }
 }

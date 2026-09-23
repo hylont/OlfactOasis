@@ -8,7 +8,7 @@ public class StoreScenario : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] GameObject _clipsReceiverGameObject;
     IClipsReceiver _clipsReceiver;
-    [SerializeField] Oculus.Interaction.Grabbable _targetItem;
+    [SerializeField] Grabbable _targetItem;
     [SerializeField] ScreenFader _screenFader;
 
     [Header("Clips")]

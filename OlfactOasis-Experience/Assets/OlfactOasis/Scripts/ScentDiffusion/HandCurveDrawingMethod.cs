@@ -1,3 +1,4 @@
+using EditorAttributes;
 using UnityEngine;
 
 // VR curve drawing method: while a pinch (Player.cs) is held, the pinching hand's fingertip traces a
@@ -30,6 +31,9 @@ public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesture
     [SerializeField] Transform _drawingSpace;
     [Tooltip("Minimum world-space distance (meters) between two recorded points.")]
     [SerializeField] float _minPointDistance = 0.005f;
+
+    [Header("Debug")]
+    [SerializeField] bool _debug;
 
     ButtonRelay _validateRelay;
     ButtonRelay _clearRelay;
@@ -77,8 +81,12 @@ public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesture
         if (_clearButton != null) _clearButton.RemoveListener(_clearRelay);
     }
 
+    [Button("Debug : Start Draw")]
+    void DebugStartDraw() => StartDraw(() => Log($"draw validated with {GetPoints().Count} points."));
+
     protected override void OnStartDraw()
     {
+        Log("draw started, waiting for a pinch.");
         _isDrawing = true;
         _isTracingStroke = false;
         ClearLine();
@@ -87,6 +95,7 @@ public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesture
 
     protected override void OnEndDraw()
     {
+        Log("draw ended.");
         _isDrawing = false;
         _isTracingStroke = false;
         if (_lineRenderer != null) _lineRenderer.enabled = false;
@@ -94,17 +103,31 @@ public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesture
 
     public void OnGesturePerformed(EPlayerGesture gesture, ESide side, Ray direction = default)
     {
-        if (!_isDrawing) return;
+        if (gesture != EPlayerGesture.Pinch && gesture != EPlayerGesture.PinchReleased) return;
 
-        if (gesture == EPlayerGesture.Pinch && !_isTracingStroke && TryGetFingerTip(side, out Transform fingerTip))
+        if (!_isDrawing)
         {
+            Log($"{gesture} ({side}) ignored : StartDraw() hasn't been called.");
+            return;
+        }
+
+        if (gesture == EPlayerGesture.Pinch && !_isTracingStroke)
+        {
+            if (!TryGetFingerTip(side, out Transform fingerTip))
+            {
+                LLogger.W($"HandCurveDrawingMethod: no finger tip on Player for side {side}, pinch ignored.");
+                return;
+            }
+
             _isTracingStroke = true;
             _strokeSide = side;
             RecordPoint(fingerTip.position);
+            Log($"stroke started ({side}) at {fingerTip.position}.");
         }
         else if (gesture == EPlayerGesture.PinchReleased && _isTracingStroke && side == _strokeSide)
         {
             _isTracingStroke = false;
+            Log($"stroke ended ({side}), {PointCount} points so far.");
         }
     }
 
@@ -138,6 +161,8 @@ public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesture
     {
         if (!_isDrawing) return;
 
+        Log("line cleared.");
+
         _isTracingStroke = false;
         ClearLine();
     }
@@ -158,6 +183,11 @@ public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesture
     {
         ClearPoints();
         if (_lineRenderer != null) _lineRenderer.positionCount = 0;
+    }
+
+    void Log(string message)
+    {
+        if (_debug) LLogger.L($"HandCurveDrawingMethod: {message}");
     }
 
     bool TryGetFingerTip(ESide side, out Transform fingerTip)
