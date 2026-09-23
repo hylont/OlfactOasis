@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class ParticipantData
+﻿public class ParticipantData
 {
     private static string _ID = string.Empty;
 

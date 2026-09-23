@@ -44,16 +44,21 @@ public class AudioDescriptionCanvas : MonoBehaviour
 
     public void Show(AudioData audioData)
     {
-        if (audioData == null || audioData.Clip == null)
-        {
-            LLogger.E("AudioDescriptionCanvas: AudioData or its Clip is missing");
-            return;
-        }
-
         if (_audioSource == null)
         {
             LLogger.E("AudioDescriptionCanvas: no AudioSource assigned to observe");
             return;
+        }
+
+        if(audioData == null)
+        {
+            LLogger.E("AudioDescriptionCanvas: no AudioData provided to show");
+            return;
+        }
+
+        if (audioData.Clip == null)
+        {
+            LLogger.W("AudioDescriptionCanvas: AudioData or its Clip is missing");
         }
 
         _lastAudioData = audioData;
@@ -83,18 +88,29 @@ public class AudioDescriptionCanvas : MonoBehaviour
 
     IEnumerator ShowRoutine(AudioData audioData)
     {
+        //LLogger.L($"AudioDescriptionCanvas: showing audio description for '{audioData.Clip?.name ?? "empty"}' and text : {audioData.AsText ?? "empty"}");
         IsShowing = true;
 
-        _audioSource.clip = audioData.Clip;
-        _audioSource.Play();
+        if (audioData.Clip != null)
+        {
+            _audioSource.clip = audioData.Clip;
+            _audioSource.Play();
 
-        string description = audioData.AsText ?? string.Empty;
-        List<string> chunks = SplitIntoWordChunks(description, _wordsPerChunk);
-        _text.text = chunks[0];
-        _text.maxVisibleCharacters = 0;
+            yield return AnimateVisibilityRoutine(true);
+            yield return RevealChunkedText(_text, _audioSource, audioData.Clip, audioData.AsText, _wordsPerChunk);
+        }
+        else if (audioData.EstimatedSpeechDuration > 0f)
+        {
+            yield return AnimateVisibilityRoutine(true);
+            yield return RevealChunkedTextTimed(_text, audioData.AsText, _wordsPerChunk, audioData.EstimatedSpeechDuration);
+        }
+        else
+        {
+            _text.text = audioData.AsText ?? string.Empty;
+            _text.maxVisibleCharacters = _text.text.Length;
 
-        yield return AnimateVisibilityRoutine(true);
-        yield return RevealTextRoutine(audioData.Clip, chunks);
+            yield return AnimateVisibilityRoutine(true);
+        }
 
         yield return new WaitForSeconds(_hideDelay);
 
@@ -104,8 +120,80 @@ public class AudioDescriptionCanvas : MonoBehaviour
         _activeCoroutine = null;
     }
 
+    // Reveals `fullText` on `target`, wordsPerChunk words at a time, in sync with `audioSource` playing
+    // `clip` (or instantly if clip is null - nothing to time the reveal against). Static and independent
+    // of this canvas's own show/hide/fade behaviour, so any other Argos speech UI (e.g. WitTTSHandler's
+    // answer text) can reuse the exact same word-by-word reveal instead of re-implementing it.
+    public static IEnumerator RevealChunkedText(TextMeshProUGUI target, AudioSource audioSource, AudioClip clip, string fullText, int wordsPerChunk)
+    {
+        fullText ??= string.Empty;
+
+        if (clip == null || audioSource == null)
+        {
+            target.text = fullText;
+            target.maxVisibleCharacters = fullText.Length;
+            yield break;
+        }
+
+        List<string> chunks = SplitIntoWordChunks(fullText, wordsPerChunk);
+        target.text = chunks[0];
+        target.maxVisibleCharacters = 0;
+
+        int lastChunkIndex = -1;
+
+        while (audioSource.isPlaying && audioSource.clip == clip)
+        {
+            float progress = clip.length > 0f ? Mathf.Clamp01(audioSource.time / clip.length) : 1f;
+            lastChunkIndex = ShowChunkAtProgress(target, chunks, progress, lastChunkIndex);
+            yield return null;
+        }
+
+        ShowChunkAtProgress(target, chunks, 1f, lastChunkIndex);
+    }
+
+    // Same reveal, but paced against elapsed real time instead of an AudioSource - for callers that
+    // can't reliably obtain a playable AudioClip to sync against (e.g. a streaming TTS voice whose
+    // clip stream doesn't expose a classic Unity AudioClip/AudioSource). Combine with
+    // EstimateSpeechDuration to get a duration from the text itself.
+    public static IEnumerator RevealChunkedTextTimed(TextMeshProUGUI target, string fullText, int wordsPerChunk, float duration)
+    {
+        fullText ??= string.Empty;
+
+        if (duration <= 0f)
+        {
+            target.text = fullText;
+            target.maxVisibleCharacters = fullText.Length;
+            yield break;
+        }
+
+        List<string> chunks = SplitIntoWordChunks(fullText, wordsPerChunk);
+        target.text = chunks[0];
+        target.maxVisibleCharacters = 0;
+
+        int lastChunkIndex = -1;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            lastChunkIndex = ShowChunkAtProgress(target, chunks, Mathf.Clamp01(elapsed / duration), lastChunkIndex);
+            yield return null;
+        }
+
+        ShowChunkAtProgress(target, chunks, 1f, lastChunkIndex);
+    }
+
+    // Rough speaking-time estimate from word count, for text with no audio to time against at all.
+    public static float EstimateSpeechDuration(string text, float wordsPerSecond)
+    {
+        if (string.IsNullOrEmpty(text) || wordsPerSecond <= 0f) return 0f;
+
+        int wordCount = text.Split((char[])null, StringSplitOptions.RemoveEmptyEntries).Length;
+        return wordCount / wordsPerSecond;
+    }
+
     // Spreads words evenly across chunks (sizes differ by at most one word) instead of always
-    // filling chunks to _wordsPerChunk, so a trailing remainder doesn't leave the last chunk
+    // filling chunks to wordsPerChunk, so a trailing remainder doesn't leave the last chunk
     // noticeably shorter than the rest.
     static List<string> SplitIntoWordChunks(string text, int wordsPerChunk)
     {
@@ -133,33 +221,15 @@ public class AudioDescriptionCanvas : MonoBehaviour
         return chunks;
     }
 
-    // Ties the revealed chunk/character count to playback progress rather than elapsed time,
-    // so the text stays in sync even if the AudioSource is paused or its pitch changes.
-    // Each chunk replaces the previous one on screen instead of stacking, so long
-    // descriptions page through a few words at a time.
-    IEnumerator RevealTextRoutine(AudioClip clip, List<string> chunks)
-    {
-        int lastChunkIndex = -1;
-
-        while (_audioSource.isPlaying && _audioSource.clip == clip)
-        {
-            float progress = clip.length > 0f ? Mathf.Clamp01(_audioSource.time / clip.length) : 1f;
-            lastChunkIndex = ShowChunkAtProgress(chunks, progress, lastChunkIndex);
-            yield return null;
-        }
-
-        ShowChunkAtProgress(chunks, 1f, lastChunkIndex);
-    }
-
-    int ShowChunkAtProgress(List<string> chunks, float progress, int lastChunkIndex)
+    static int ShowChunkAtProgress(TextMeshProUGUI target, List<string> chunks, float progress, int lastChunkIndex)
     {
         float chunkPosition = progress * chunks.Count;
         int chunkIndex = Mathf.Clamp(Mathf.FloorToInt(chunkPosition), 0, chunks.Count - 1);
 
-        if (chunkIndex != lastChunkIndex) _text.text = chunks[chunkIndex];
+        if (chunkIndex != lastChunkIndex) target.text = chunks[chunkIndex];
 
         float chunkProgress = Mathf.Clamp01(chunkPosition - chunkIndex);
-        _text.maxVisibleCharacters = Mathf.FloorToInt(chunkProgress * chunks[chunkIndex].Length);
+        target.maxVisibleCharacters = Mathf.FloorToInt(chunkProgress * chunks[chunkIndex].Length);
 
         return chunkIndex;
     }

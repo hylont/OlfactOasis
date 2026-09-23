@@ -1,5 +1,4 @@
 using EditorAttributes;
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +9,12 @@ public interface IButtonListener
 }
 
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Collider))]
 public class PushButton : MonoBehaviour
 {
+    [SerializeField] GameObject _pushablePart;
+    [SerializeField] float _pushDistance = 0.015f;
+    Vector3 _initialPushablePosition;
     [Header("Audio feedback")]
     [SerializeField] AudioClip _buttonDownClip;
     [SerializeField] AudioClip _buttonUpClip;
@@ -21,6 +24,8 @@ public class PushButton : MonoBehaviour
     private void Start()
     {
         _feedbackSource = GetComponent<AudioSource>();
+
+        _initialPushablePosition = _pushablePart.transform.localPosition;
     }
 
     public void AddListener(IButtonListener listener)
@@ -38,6 +43,22 @@ public class PushButton : MonoBehaviour
         _listeners.Remove(listener);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("FingerTip"))
+        {
+            OnButtonDown();
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("FingerTip"))
+        {
+            OnButtonUp();
+        }
+    }
+
     [Button("Button Down")]
     void OnButtonDown()
     {
@@ -45,11 +66,13 @@ public class PushButton : MonoBehaviour
         {
             listener.OnButtonDown();
         }
+        
+        _pushablePart.transform.localPosition = new Vector3(_initialPushablePosition.x, _initialPushablePosition.y - _pushDistance, _initialPushablePosition.z);
 
-        if(_buttonDownClip != null)
+        if (_buttonDownClip != null)
         {
             _feedbackSource.clip = _buttonDownClip;
-            _feedbackSource.Play();
+            _feedbackSource.Play(); 
         }
     }
 
@@ -60,6 +83,8 @@ public class PushButton : MonoBehaviour
         {
             listener.OnButtonUp();
         }
+
+        _pushablePart.transform.localPosition = _initialPushablePosition;
 
         if (_buttonUpClip != null)
         {

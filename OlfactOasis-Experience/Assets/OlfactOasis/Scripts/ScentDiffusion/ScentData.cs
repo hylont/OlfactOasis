@@ -6,7 +6,7 @@ public class ScentData
 {
     public EScentName Name = EScentName.Unknown;
     public int SlotIndex = 1;
-    public int DefaultVibrationFrequency = 11000;
+    public int DefaultVibrationFrequency = 110000;
     public List<ScentEvaluation> Evaluations = new();
     public ScentDiffusionParameters MildParameters, OptimalParameters, StrongParameters;
 

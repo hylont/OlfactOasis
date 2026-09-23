@@ -6,6 +6,8 @@ using UnityEngine;
 public class ScreenFader : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _fadeCanvasGroup;
+    [Header("Start behaviour")]
+    [SerializeField] bool _fadeOutAtStart = false;
     public float FadeDuration = 2f;
 
     private void Start()
@@ -17,7 +19,7 @@ public class ScreenFader : MonoBehaviour
         }
 
         _fadeCanvasGroup.alpha = 1f;
-        FadeToHidden();
+        if(_fadeOutAtStart) FadeToHidden();
     }
 
     [Button("Fade To Hidden")]

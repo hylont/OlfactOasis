@@ -219,6 +219,10 @@ MonoBehaviour:
       Duration: 0
       Frequency: 0
   CurveDrawingMethod: {fileID: 0}
+  _printerAnimator: {fileID: 0}
+  _printerTriggerName: Print
+  _printDuration: 3
+  _vialCollider: {fileID: 0}
   _renderers: []
   _transparentAlpha: 0.15
   _fadeDuration: 0.5
@@ -679,7 +683,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751634912}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -715,17 +719,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &776333392 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7477503331948371905, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
-  m_PrefabInstance: {fileID: 106535290}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496631878d92baa4085d5d59d32295d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactiveCalibrationBooth
 --- !u!1001 &877320888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -791,17 +784,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
---- !u!114 &877320889 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7477503331948371905, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
-  m_PrefabInstance: {fileID: 877320888}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496631878d92baa4085d5d59d32295d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactiveCalibrationBooth
 --- !u!1001 &1018851682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1091,6 +1073,10 @@ MonoBehaviour:
       Duration: 0
       Frequency: 0
   CurveDrawingMethod: {fileID: 0}
+  _printerAnimator: {fileID: 0}
+  _printerTriggerName: Print
+  _printDuration: 3
+  _vialCollider: {fileID: 0}
   _renderers: []
   _transparentAlpha: 0.15
   _fadeDuration: 0.5
@@ -1545,6 +1531,7 @@ MonoBehaviour:
   RightHand: {fileID: 0}
   RightFingerTip: {fileID: 0}
   Head: {fileID: 1889671237}
+  DebugMode: 1
   _debug: 1
 --- !u!1 &1392965487
 GameObject:
@@ -1622,17 +1609,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392965487}
   m_CullTransparentMesh: 1
---- !u!114 &1569360025 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7477503331948371905, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
-  m_PrefabInstance: {fileID: 459572671}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496631878d92baa4085d5d59d32295d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactiveCalibrationBooth
 --- !u!1 &1866680792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,7 +1774,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1951285814}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1889671241
@@ -1924,6 +1901,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1951285814 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+  m_PrefabInstance: {fileID: 1513775176018848433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2034167068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,24 +2043,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4ad5b9f11050443a35f48c1be20d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScentEvaluationScenario
-  ScentStrengthsConfigs:
-  - 0.01
-  - 0.03
-  - 0.07
-  - 0.2
-  - 0.55
-  - 1
-  ScentDuration: 3
+  ScentStrengthsConfigs: 000000000000000000000000000000000000000000000000
+  ScentDuration: 3000
   PerceptionQuestionDelay: 10
   ApproachDistance: 1.5
   NegativeAnswersUntilSkip: 3
-  _olfactiveBooths:
-  - {fileID: 877320889}
-  - {fileID: 776333392}
-  - {fileID: 1569360025}
+  _booth: {fileID: 0}
   _clipsReceiverGameObject: {fileID: 1047659016}
   _player: {fileID: 1254716872}
   _scentDiffuser: {fileID: 470892751}
+  _sceneSwitch: {fileID: 0}
+  _storeSceneName: StoreScene
   _verbose: 1
   _pythonExecutable: python
   _dataReaderScriptRelativePath: ../../OlfactoasisDataReader.py
@@ -2099,6 +2074,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1513775176018848433
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1889671240}
+    m_Modifications:
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6560760227168670872, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314037055617474539, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
+      propertyPath: m_Name
+      value: P_ScreenFadeCanvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 091875a441e689349a32c0ccd3eefa92, type: 3}
 --- !u!1001 &2776285873409118039
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using EditorAttributes;
 using Olfy;
 using RotaryHeart.Lib.SerializableDictionary;
 using System;
@@ -26,6 +25,7 @@ public partial class OlfyHandler : MonoBehaviour, IScentDiffuser
     [Header("Debug")]
 
     [SerializeField] private TextMeshProUGUI _debugText;
+    [SerializeField] bool _ignoreOlfyNotReady = false;
 
     [SerializeField] private SerializableDictionaryBase<EScentSlotStatus, Color> _statusColors = new()
     {
@@ -96,7 +96,7 @@ public partial class OlfyHandler : MonoBehaviour, IScentDiffuser
 
     void Update()
     {
-        if(!_readyNotified && _olfyManager.isReady)
+        if (!_readyNotified && (_ignoreOlfyNotReady || _olfyManager.isReady))
         {
             _readyNotified = true;
             OnOlfyReady?.Invoke();

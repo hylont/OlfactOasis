@@ -30,6 +30,10 @@ public abstract class AbstractCurveDrawingMethod : MonoBehaviour
 
     protected void AddPoint(Vector3 point) => points.Add(point);
 
+    protected void ClearPoints() => points.Clear();
+
+    protected int PointCount => points.Count;
+
     public List<Vector3> GetPoints()
     {
         if(points == null || points.Count == 0)

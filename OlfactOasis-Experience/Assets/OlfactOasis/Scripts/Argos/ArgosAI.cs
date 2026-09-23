@@ -6,9 +6,9 @@ using UnityEngine;
 
 public interface IClipsReceiver
 {
-    void HandleClip(string clipID);
-    void HandleClip(string clipID, Transform target);
-    void StopClip(string clipID);
+    void HandleClip(string clip);
+    void HandleClip(string clip, Transform target);
+    void StopClip(string clip);
 }
 
 public class ArgosAI : MovementAI, IClipsReceiver
@@ -17,6 +17,9 @@ public class ArgosAI : MovementAI, IClipsReceiver
     [SerializeField] bool _powerOnAtStart = false;
     [SerializeField] string _lookingAnim = "LOOKING_AT";
     [SerializeField] string _poweredAnim = "POWERED";
+    [Header("(Optionnal) Set an IClipsReceiver to forward the clips to")]
+    [SerializeField] GameObject _otherReceiverGO;
+    IClipsReceiver _receiver;
 
     [Header("Argos face")]
     [SerializeField] string _happyBSName = "Happy";
@@ -96,6 +99,15 @@ public class ArgosAI : MovementAI, IClipsReceiver
 
         StartCoroutine(RandomBlinkRoutine());
 
+        if(_otherReceiverGO != null && _otherReceiverGO.TryGetComponent<IClipsReceiver>(out IClipsReceiver receiver))
+        {
+            LLog.L("ArgosAI: forwarding clips to " + _otherReceiverGO.name);
+            _receiver = receiver;
+        }
+        else
+        {
+            _otherReceiverGO = null;
+        }
     }
 
     [Button("Power On")]
@@ -114,6 +126,12 @@ public class ArgosAI : MovementAI, IClipsReceiver
 
     public void HandleClip(string clipID)
     {
+        if(_receiver != null)
+        {
+            _receiver.HandleClip(clipID);
+            return;
+        }
+
         if (CheckClipDependencies() == false) return;
 
         AudioDescription.Show(ClipsManager.GetClip(clipID));
@@ -138,6 +156,12 @@ public class ArgosAI : MovementAI, IClipsReceiver
 
     public void StopClip(string clipID)
     {
+        if (_receiver != null)
+        {
+            _receiver.StopClip(clipID);
+            return;
+        }
+
         if (CheckClipDependencies() == false) return;
 
         AudioDescription.Hide();
@@ -346,6 +370,12 @@ public class ArgosAI : MovementAI, IClipsReceiver
 
     public void HandleClip(string clipID, Transform target)
     {
+        if (_receiver != null)
+        {
+            _receiver.HandleClip(clipID, target);
+            return;
+        }
+
         HandleClip(clipID);
     }
 }

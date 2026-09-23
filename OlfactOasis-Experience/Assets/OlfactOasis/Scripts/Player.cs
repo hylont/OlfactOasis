@@ -11,11 +11,25 @@ public class Player : MonoBehaviour
     public GameObject RightFingerTip;
     public GameObject Head;
 
-
     [Header("Debug")]
+    [Tooltip("While true, real hand-tracking input (HandPoseAnalyzer, grab colliders) is ignored ; interactions are only driven by the debug buttons below. Turn off once tested on-headset.")]
+    public bool DebugMode = true;
     [SerializeField] bool _debug;
 
+    public static Player Instance { get; private set; }
+
     List<IPlayerGesturesListener> _listeners = new();
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            LLogger.W($"Multiple Player instances found, keeping {Instance.name}.");
+            return;
+        }
+
+        Instance = this;
+    }
 
     public void AddListener(IPlayerGesturesListener listener)
     {
@@ -32,60 +46,47 @@ public class Player : MonoBehaviour
         _listeners.Remove(listener);
     }
 
-    [Button("Gesture : Thumb Up")]
-    void OnThumbUpPerformed()
+    // Shared dispatch : used by the debug buttons below AND by HandPoseAnalyzer (real hand tracking),
+    // so both paths notify listeners the exact same way.
+    public void NotifyGesture(EPlayerGesture gesture, ESide side = ESide.Other, Ray direction = default)
     {
-        if (_debug) LLogger.L("Thumb up recognized");
+        if (_debug) LLogger.L($"{gesture} recognized ({side})");
 
         foreach (IPlayerGesturesListener listener in _listeners)
         {
-            listener.OnGesturePerformed(EPlayerGesture.ThumbUp, ESide.Right);
+            listener.OnGesturePerformed(gesture, side, direction);
         }
     }
+    [Button("Gesture : Grab")]
+    public void OnGrabPerformed() => NotifyGesture(EPlayerGesture.Grab);
 
+    [Button("Gesture : Thumb Up")]
+    public void OnThumbUpPerformed() => NotifyGesture(EPlayerGesture.ThumbUp);
 
     [Button("Gesture : Thumbs Down")]
-    void OnThumbDownPerformed()
-    {
-        if (_debug) LLogger.L("Thumb down recognized");
+    public void OnThumbDownPerformed() => NotifyGesture(EPlayerGesture.ThumbDown);
 
-        foreach (IPlayerGesturesListener listener in _listeners)
-        {
-            listener.OnGesturePerformed(EPlayerGesture.ThumbDown, ESide.Right);
-        }
-    }
-    
     [Button("Gesture : Horinzontal Hand")]
-    void OnHorizontalHandPerformed()
-    {
-        if (_debug) LLogger.L("Horizontal hand recognized");
-
-        foreach (IPlayerGesturesListener listener in _listeners)
-        {
-            listener.OnGesturePerformed(EPlayerGesture.HorizontalHand, ESide.Right);
-        }
-    }
+    public void OnHorizontalHandPerformed() => NotifyGesture(EPlayerGesture.HorizontalHand);
+    
+    
+    public void OnLeftPinchPerformed() => NotifyGesture(EPlayerGesture.Pinch, ESide.Left);
+    public void OnRightPinchPerformed() => NotifyGesture(EPlayerGesture.Pinch, ESide.Right);
+    public void OnLeftPinchReleased() => NotifyGesture(EPlayerGesture.PinchReleased, ESide.Left);
+    public void OnRightPinchReleased() => NotifyGesture(EPlayerGesture.PinchReleased, ESide.Right);
 
     [Button("Gesture : Arms crossed")]
-    void OnArmsCrossedPerformed()
-    {
-        if (_debug) LLogger.L("Arms crossed recognized");
+    public void OnArmsCrossedPerformed() => NotifyGesture(EPlayerGesture.ArmsCrossed);
 
-        foreach (IPlayerGesturesListener listener in _listeners)
-        {
-            listener.OnGesturePerformed(EPlayerGesture.ArmsCrossed, ESide.Right);
-        }
+
+    public void OnLeftPointFingerPerformed()
+    {
+        Ray direction = new Ray(LeftFingerTip.transform.position, LeftFingerTip.transform.forward);
+        NotifyGesture(EPlayerGesture.Pointing, ESide.Left, direction);
     }
-
-    [Button("Gesture : Point finger")]
-    void OnPointFingerPerformed()
+    public void OnRightPointFingerPerformed()
     {
-        if (_debug) LLogger.L("Finger pointed recognized");
-
         Ray direction = new Ray(RightFingerTip.transform.position, RightFingerTip.transform.forward);
-        foreach (IPlayerGesturesListener listener in _listeners)
-        {
-            listener.OnGesturePerformed(EPlayerGesture.Pointing, ESide.Right, direction);
-        }
+        NotifyGesture(EPlayerGesture.Pointing, ESide.Right, direction);
     }
 }

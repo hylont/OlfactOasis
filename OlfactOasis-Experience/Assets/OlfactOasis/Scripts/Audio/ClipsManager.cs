@@ -128,7 +128,7 @@ public class ClipsManager : ScriptableObject
                 continue;
             }
 
-            _clips[clipID] = new AudioData { Clip = clip };
+            _clips[clipID] = new AudioData(clip);
 
             if (alreadyExists) updatedCount++;
             else addedCount++;

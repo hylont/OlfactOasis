@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,14 @@ public class OlfactiveCalibrationBooth : MonoBehaviour
     public ScentData ScentData;
 
     public AbstractCurveDrawingMethod CurveDrawingMethod;
+
+    [Header("3D printer / vial (placeholders until final art)")]
+    [Tooltip("Optional - if assigned, a trigger named by Printer Trigger Name is fired instead of just waiting Print Duration.")]
+    [SerializeField] Animator _printerAnimator;
+    [SerializeField] string _printerTriggerName = "Print";
+    [SerializeField] float _printDuration = 3f;
+    [Tooltip("Collider on the vial placeholder ; disabled while printing, enabled once the vial is ready to grab.")]
+    [SerializeField] Collider _vialCollider;
 
     [Header("Visibility")]
     [SerializeField] Renderer[] _renderers;
@@ -53,6 +62,35 @@ public class OlfactiveCalibrationBooth : MonoBehaviour
     public void Appear() => FadeTo(1f);
 
     public void Disappear() => FadeTo(_transparentAlpha);
+
+    // Placeholder 3D printer : disables the vial's collider (nothing to grab while it's "printing"),
+    // plays a trigger on _printerAnimator if one is assigned, otherwise just waits _printDuration.
+    // Swap in a real animation clip + Animation Event calling this callback once final art exists.
+    public void PlayPrinterAnimation(Action onPrinted)
+    {
+        if (_vialCollider != null) _vialCollider.enabled = false;
+
+        if (_printerAnimator != null) _printerAnimator.SetTrigger(_printerTriggerName);
+
+        StartCoroutine(PrintRoutine(onPrinted));
+    }
+
+    IEnumerator PrintRoutine(Action onPrinted)
+    {
+        yield return new WaitForSeconds(_printDuration);
+        onPrinted?.Invoke();
+    }
+
+    public void ActivateVialCollider()
+    {
+        if (_vialCollider == null)
+        {
+            LLogger.E($"OlfactiveCalibrationBooth ({name}): no vial collider assigned.");
+            return;
+        }
+
+        _vialCollider.enabled = true;
+    }
 
     void FadeTo(float targetAlpha)
     {

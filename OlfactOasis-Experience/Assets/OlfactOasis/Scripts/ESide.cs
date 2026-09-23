@@ -1,4 +1,4 @@
 public enum ESide
 {
-    Left, Right
+    Left, Right, Other
 }

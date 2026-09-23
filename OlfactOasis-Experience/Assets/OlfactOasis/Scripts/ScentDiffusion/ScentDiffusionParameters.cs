@@ -12,10 +12,10 @@ public class ScentDiffusionParameters
     private const float MIN_STRENGTH = 0f;
     private const float MAX_STRENGTH = 1f;
 
-    private const float DEFAULT_DURATION = 3f;
-    private const float MIN_DURATION = .1f;
+    private const int DEFAULT_DURATION = 3000;
+    private const int MIN_DURATION = 1000;
 
-    private const int DEFAULT_FREQUENCY = 11000;
+    private const int DEFAULT_FREQUENCY = 110000;
     private const int MIN_FREQUENCY = 100;
     #endregion
 
@@ -26,13 +26,13 @@ public class ScentDiffusionParameters
     [Range(MIN_STRENGTH,MAX_STRENGTH)] 
     public float Strength = DEFAULT_STRENGTH;
     
-    [Tooltip("The duration of a scent emission (3 by default)")]
-    [Min(MIN_DURATION)] public float Duration = DEFAULT_DURATION;
+    [Tooltip("The duration of a scent emission (3000 ms by default)")]
+    [Min(MIN_DURATION)] public int Duration = DEFAULT_DURATION;
 
-    [Tooltip("The vibration frequency of the diffusion, in hertz. Used to handle thickest solutions. (11000 Hz by default)")]
+    [Tooltip("The vibration frequency of the diffusion, in hertz. Used to handle thickest solutions. (110000 Hz by default)")]
     [Min(MIN_FREQUENCY)] public int Frequency = DEFAULT_FREQUENCY;
 
-    public ScentDiffusionParameters(int slotIndex, float strength, float duration, int frequency = DEFAULT_FREQUENCY)
+    public ScentDiffusionParameters(int slotIndex, float strength, int duration, int frequency = DEFAULT_FREQUENCY)
     {
         SlotIndex = slotIndex;
         if (SlotIndex < MIN_SLOT_INDEX) LLogger.W($"The scent's slot should be at least {MIN_SLOT_INDEX}");
@@ -41,7 +41,7 @@ public class ScentDiffusionParameters
         if (Strength < MIN_STRENGTH || Strength > MAX_STRENGTH) LLogger.W($"The scent's strength should be between {MIN_STRENGTH} and {MAX_STRENGTH}.");
         
         Duration = duration;
-        if (Duration < MIN_DURATION) LLogger.W($"The scent's duration should be more than {MIN_DURATION} seconds.");
+        if (Duration < MIN_DURATION) LLogger.W($"The scent's duration should be more than {MIN_DURATION} milliseconds.");
         
         Frequency = frequency;
     }
