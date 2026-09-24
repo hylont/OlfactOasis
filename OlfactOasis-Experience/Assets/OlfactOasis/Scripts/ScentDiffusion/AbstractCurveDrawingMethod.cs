@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EditorAttributes;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AbstractCurveDrawingMethod : MonoBehaviour
@@ -31,6 +32,14 @@ public abstract class AbstractCurveDrawingMethod : MonoBehaviour
 
     protected void AddPoint(Vector3 point) => points.Add(point);
 
+    [Button("Generate random points")]
+    void CreateRandomPoints()
+    {
+        for(int i=0; i<Random.Range(0,25); i++)
+        {
+            AddPoint(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)));
+        }
+    }
 
     protected int PointCount => points.Count;
 

@@ -1,5 +1,6 @@
 ﻿using EditorAttributes;
 using Oculus.Interaction;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,10 +29,9 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
     [ShowInInspector] bool _isPrinting = false;
     [ShowInInspector] float _printdurationTimer;
     [ShowInInspector] bool _scentDiffused = false;
+    bool _endCalled = false;
 
     [Header("Instructions")]
-    [SerializeField] GameObject IClipsReceiverGO; 
-    IClipsReceiver _clipsReceiver;
     [TextArea, SerializeField] string _printingInstruction;
     [TextArea, SerializeField] string _pickupDiffuserInstruction;
     [TextArea, SerializeField] string _detectionQuestionInstruction;
@@ -44,14 +44,11 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
 
     [Header("Debug")]
     [SerializeField] bool _verbose = false;
-    public List<ScentEvaluation> Evaluations;
     [ShowInInspector] int _currentStrengthIndex = 0;
 
-    private void Start()
+    public void Init()
     {
-        if(IClipsReceiverGO) _clipsReceiver = IClipsReceiverGO.GetComponent<IClipsReceiver>();
-
-        if(CurveDrawingMethod == null || PrinterAnimator == null || Diffuser == null || _clipsReceiver == null || _masterScenario == null)
+        if(CurveDrawingMethod == null || PrinterAnimator == null || Diffuser == null || _masterScenario.ClipsReceiver == null || _masterScenario == null)
         {
             LLogger.E("Missing dependencies, aborting.");
             enabled = false;
@@ -62,6 +59,8 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
         _baseDiffuserRotation = Diffuser.transform.rotation;
 
         _masterScenario.Player.AddListener(this);
+
+        SetState(EScentCalibrationStep.WAITING);
     }
 
     private void Update()
@@ -76,6 +75,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 if(CurrentStep == EScentCalibrationStep.WAIT_FOR_PRINTING)
                 {
                     SetState(EScentCalibrationStep.READY);
+                    _printdurationTimer = 0;
                 }
             }
         }
@@ -102,7 +102,13 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
 
         _isPrinting = true;
         _scentDiffused = true;
-        SetState(EScentCalibrationStep.DETECTION_QUESTION);
+        StartCoroutine(SetState_Delayed(EScentCalibrationStep.DETECTION_QUESTION, _masterScenario.PerceptionQuestionDelay));
+    }
+
+    IEnumerator SetState_Delayed(EScentCalibrationStep newState, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetState(newState);
     }
 
     public void SetState(EScentCalibrationStep newStep)
@@ -120,15 +126,15 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 Diffuser.gameObject.SetActive(false);
                 break;
             case EScentCalibrationStep.WAIT_FOR_PRINTING:
-                _clipsReceiver.HandleClip(_printingInstruction);
+                _masterScenario.ClipsReceiver.HandleClip(_printingInstruction);
                 Diffuser.gameObject.SetActive(false);
                 _isPrinting = true;
                 break;
             case EScentCalibrationStep.READY:
-                _clipsReceiver.HandleClip(_pickupDiffuserInstruction);
+                _masterScenario.ClipsReceiver.HandleClip(_pickupDiffuserInstruction);
                 Diffuser.gameObject.SetActive(true);
                 Diffuser.transform.SetPositionAndRotation(_baseDiffuserPosition, _baseDiffuserRotation);
-                Evaluations.Add(new ScentEvaluation());
+                ScentData.Evaluations.Add(new ScentEvaluation());
                 _isPrinting = false;
                 _scentDiffused = false;
                 _currentParameters = new ScentDiffusionParameters(ScentData.SlotIndex,
@@ -137,39 +143,37 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                     ScentData.DefaultVibrationFrequency);
                 break;
             case EScentCalibrationStep.DETECTION_QUESTION:
-                _clipsReceiver.HandleClip(_detectionQuestionInstruction);
+                _masterScenario.ClipsReceiver.HandleClip(_detectionQuestionInstruction);
                 Diffuser.gameObject.SetActive(false);
                 break;
             case EScentCalibrationStep.VALENCE_QUESTION:
-                _clipsReceiver.HandleClip(_valenceQuestionInstruction);
+                _masterScenario.ClipsReceiver.HandleClip(_valenceQuestionInstruction);
                 break;
             case EScentCalibrationStep.VALENCE_TEST:
                 foreach (GameObject CDO in _curveDrawingObjects) CDO.SetActive(true);
-                if (Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Positive)
+                if (ScentData.Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Positive)
                 {
-                    _clipsReceiver.HandleClip(_positiveValenceTestInstruction);
-                } else if (Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Negative)
+                    _masterScenario.ClipsReceiver.HandleClip(_positiveValenceTestInstruction);
+                } else if (ScentData.Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Negative)
                 {
-                    _clipsReceiver.HandleClip(_negativeValenceTestInstruction);
+                    _masterScenario.ClipsReceiver.HandleClip(_negativeValenceTestInstruction);
                 }
-                CurveDrawingMethod.StartDraw(() => OnEvaluationEnd());
+                CurveDrawingMethod.StartDraw(() => StartCoroutine(OnEvaluationEnd_Delayed()));
                 break;
         }
     }
 
     void OnEvaluationEnd()
     {
-        Evaluations[_currentStrengthIndex].Parameters = _currentParameters;
-        Evaluations[_currentStrengthIndex].ResponseCurvePoints = CurveDrawingMethod.GetPoints();
-        Evaluations[_currentStrengthIndex].ResponseMagnitude = ScentEvaluation.GetResponseMagnitude(CurveDrawingMethod.GetPoints());
-
         //At least 2 evals, and 2 evals were unpleasant
-        if (Evaluations.Count >= _masterScenario.NegativeAnswersUntilSkip
-            && Evaluations.FindAll(e => e.WasPleasant == EUserResponse.Negative).Count >= _masterScenario.NegativeAnswersUntilSkip)
+        if (ScentData.Evaluations.Count >= _masterScenario.NegativeAnswersUntilSkip
+            && ScentData.Evaluations.FindAll(e => e.WasPleasant == EUserResponse.Negative).Count >= _masterScenario.NegativeAnswersUntilSkip)
         {
             LLogger.W($"Calibration of {ScentData.Name} aborted");
-            _clipsReceiver.HandleClip(_skipScentInstruction);
+            _masterScenario.ClipsReceiver.HandleClip(_skipScentInstruction);
             _masterScenario.OnBoothEnded();
+            _masterScenario.Player.RemoveListener(this);
+
         }
         else
         {
@@ -180,13 +184,35 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 LLogger.L($"Calibration for {ScentData.Name} was completed");
                 //It's the master scenario who decides if the calibration continues or not, so nextbooth
                 _masterScenario.OnBoothEnded();
+                _masterScenario.Player.RemoveListener(this);
+
             }
             else
             {
-                _clipsReceiver.HandleClip(_strengthSwitchInstruction);
+                _masterScenario.ClipsReceiver.HandleClip(_strengthSwitchInstruction);
                 SetState(EScentCalibrationStep.WAIT_FOR_PRINTING);
             }
-        }        
+        }
+    }
+
+    IEnumerator OnEvaluationEnd_Delayed()
+    {
+        if (!_endCalled)
+        {
+            ScentData.Evaluations[_currentStrengthIndex].Parameters = _currentParameters;
+            ScentData.Evaluations[_currentStrengthIndex].ResponseCurvePoints = CurveDrawingMethod.GetPoints();
+            ScentData.Evaluations[_currentStrengthIndex].ResponseMagnitude = ScentEvaluation.GetResponseMagnitude(CurveDrawingMethod.GetPoints());
+
+            _endCalled = true;
+            yield return new WaitForSeconds(1f);
+            OnEvaluationEnd();
+            _endCalled = false;
+        }
+    }
+
+    void OnDestroy()
+    {
+        _masterScenario.Player.RemoveListener(this);
     }
 
     public void OnGesturePerformed(EPlayerGesture gesture, ESide side = ESide.Other, Ray direction = default)
@@ -195,7 +221,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
         {
             if (gesture == EPlayerGesture.ThumbUp)
             {
-                Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.Positive;
+                ScentData.Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.Positive;
 
                 SetState(EScentCalibrationStep.VALENCE_QUESTION);
             }
@@ -203,33 +229,31 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
             {
                 if (gesture == EPlayerGesture.ThumbDown)
                 {
-                    Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.Negative;
+                    ScentData.Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.Negative;
                     OnEvaluationEnd();
                 
                 }else if (gesture == EPlayerGesture.HorizontalHand)
                 {
-                    Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.NeutralUndecided;
+                    ScentData.Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.NeutralUndecided;
                     OnEvaluationEnd();
                 }
             }
-        }
-
-        if (CurrentStep == EScentCalibrationStep.VALENCE_QUESTION)
+        }else if (CurrentStep == EScentCalibrationStep.VALENCE_QUESTION)
         {
             if (gesture == EPlayerGesture.HorizontalHand)
             {
-                Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.NeutralUndecided;
+                ScentData.Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.NeutralUndecided;
                 OnEvaluationEnd();
             }
             else
             {
                 if (gesture == EPlayerGesture.ThumbUp)
                 {
-                    Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.Positive;
+                    ScentData.Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.Positive;
                     SetState(EScentCalibrationStep.VALENCE_TEST);
                 }else if (gesture == EPlayerGesture.ThumbDown)
                 {
-                    Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.Negative;
+                    ScentData.Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.Negative;
                     SetState(EScentCalibrationStep.VALENCE_TEST);
                 }
             }

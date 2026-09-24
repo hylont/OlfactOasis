@@ -1,4 +1,4 @@
 ﻿public enum EUserResponse
 {
-    Negative, NeutralUndecided, Positive
+    None, Negative, NeutralUndecided, Positive
 }

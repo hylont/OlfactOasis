@@ -62,13 +62,13 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
 
         if (!Physics.Raycast(direction, out RaycastHit hit, _maxDistance))
         {
-            LLogger.W("PointTeleportController: pointing ray hit nothing.");
+            //LLogger.W("PointTeleportController: pointing ray hit nothing.");
             return;
         }
 
         if (!hit.collider.CompareTag(_walkableTag))
         {
-            LLogger.W($"PointTeleportController: pointing ray hit '{hit.collider.name}', which isn't tagged '{_walkableTag}'.");
+            //LLogger.W($"PointTeleportController: pointing ray hit '{hit.collider.name}', which isn't tagged '{_walkableTag}'.");
             return;
         }
 

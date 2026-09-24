@@ -277,7 +277,7 @@ public class BleManager : MonoBehaviour
     {
         Debug.Log("Diffuse : " + channel);
 
-        string str = "{ \"action\":\"diffuse\",\"duration\":" + duration + ",\"channel\":" + channel + ",\"intensity\":" + intensity + ",\"freq\":" + freq + ",\"booster\":" + booster + "}";
+        string str = "{ \"action\":\"diffuse\",\"duration\":" + duration + ",\"channel\":" + channel + ",\"intensity\":" + intensity + ",\"freq\":" + freq + ",\"booster\":" + (booster ? "true" : "false") + "}";
         SendString(str);
     }
     //public void GetBatt()

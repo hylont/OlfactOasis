@@ -121,7 +121,7 @@ public class ArgosAI : MovementAI, IClipsReceiver
 
         Animator.SetBool(_poweredAnim, true);
 
-        HandleClip("argos.introduction.consignepause");
+        //HandleClip("argos.introduction.consignepause");
     }
 
     public void HandleClip(string clipID)

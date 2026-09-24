@@ -121,9 +121,9 @@ public partial class OlfyHandler : MonoBehaviour, IScentDiffuser
         {
             HandleDiffusion(parameters);
 
-            _olfyManager.SendSmellToOlfy(parameters.Duration, parameters.SlotIndex + "", (int)(parameters.Strength * 100), parameters.Frequency, false);
+            _olfyManager.SendSmellToOlfy(parameters.Duration, parameters.SlotIndex + "", parameters.Strength, parameters.Frequency, false);
             
-            string output = "Diffusion request sent to Olfy at "+DateTime.Now.ToString("HH:mm:ss")+"\nSlot " + parameters.SlotIndex + ", Strength " + (int)(parameters.Strength * 100) + ", Duration " + parameters.Duration + ", Frequency " + parameters.Frequency;
+            string output = "Diffusion request sent to Olfy at "+DateTime.Now.ToString("HH:mm:ss")+"\nSlot " + parameters.SlotIndex + ", Strength " + parameters.Strength + ", Duration " + parameters.Duration + ", Frequency " + parameters.Frequency;
             if(_debugText != null) _debugText.text = output;
             LLogger.L(output);
 
@@ -147,7 +147,7 @@ public partial class OlfyHandler : MonoBehaviour, IScentDiffuser
 
     IEnumerator HandleStopDiffusion_Coroutine(ScentDiffusionParameters parameters)
     {
-        yield return new WaitForSeconds(parameters.Duration);
+        yield return new WaitForSeconds(parameters.Duration/1000);
         _slots[parameters.SlotIndex].Status = EScentSlotStatus.Ready;
     }
 

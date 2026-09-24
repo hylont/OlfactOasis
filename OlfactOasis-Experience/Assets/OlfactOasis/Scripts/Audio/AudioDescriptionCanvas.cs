@@ -25,6 +25,8 @@ public class AudioDescriptionCanvas : MonoBehaviour
     [SerializeField] float _disappearDuration = 0.35f;
     [SerializeField] AnimationCurve _disappearCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
+    [Header("Debug")]
+    [SerializeField] bool _verbose = false;
     RectTransform _rectTransform;
     CanvasGroup _canvasGroup;
     Coroutine _activeCoroutine;
@@ -56,7 +58,7 @@ public class AudioDescriptionCanvas : MonoBehaviour
             return;
         }
 
-        if (audioData.Clip == null)
+        if (audioData.Clip == null && _verbose)
         {
             LLogger.W("AudioDescriptionCanvas: AudioData or its Clip is missing");
         }

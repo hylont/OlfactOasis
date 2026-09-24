@@ -11,6 +11,11 @@ public class Player : MonoBehaviour
     public GameObject RightFingerTip;
     public GameObject Head;
 
+    [Header("Cooldown")]
+    public float SameGestureNotificationsCooldown = 2f;
+    float _cooldownTimer = 0f;
+    EPlayerGesture _cooldownedGesture = EPlayerGesture.None;
+
     [Header("Debug")]
     [Tooltip("While true, real hand-tracking input (HandPoseAnalyzer, grab colliders) is ignored ; interactions are only driven by the debug buttons below. Turn off once tested on-headset.")]
     public bool DebugMode = true;
@@ -29,6 +34,19 @@ public class Player : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    private void Update()
+    {
+        if(_cooldownedGesture != EPlayerGesture.None)
+        {
+            _cooldownTimer += Time.deltaTime;
+            if (_cooldownTimer > SameGestureNotificationsCooldown)
+            {
+                _cooldownedGesture = EPlayerGesture.None;
+                _cooldownTimer = 0f;
+            }
+        }
     }
 
     public void AddListener(IPlayerGesturesListener listener)
@@ -50,12 +68,20 @@ public class Player : MonoBehaviour
     // so both paths notify listeners the exact same way.
     public void NotifyGesture(EPlayerGesture gesture, ESide side = ESide.Other, Ray direction = default)
     {
+        if(_cooldownedGesture == gesture)
+        {
+            if (_debug) LLogger.L($"Ignored {gesture} because it has just been made");
+            return;
+        }
+
         if (_debug) LLogger.L($"{gesture} recognized ({side})");
 
         foreach (IPlayerGesturesListener listener in _listeners)
         {
             listener.OnGesturePerformed(gesture, side, direction);
         }
+
+        _cooldownedGesture = gesture;
     }
     [Button("Gesture : Grab")]
     public void OnGrabPerformed() => NotifyGesture(EPlayerGesture.Grab);

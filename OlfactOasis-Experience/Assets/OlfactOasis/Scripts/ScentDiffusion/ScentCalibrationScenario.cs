@@ -35,7 +35,7 @@ public class ScentCalibrationScenario : MonoBehaviour
 
     [Header("Dependencies")]
     [SerializeField] GameObject _clipsReceiverGameObject;
-    IClipsReceiver _clipsReceiver;
+    public IClipsReceiver ClipsReceiver;
     public Player Player;
     public OlfyHandler ScentDiffuser;
 
@@ -58,9 +58,9 @@ public class ScentCalibrationScenario : MonoBehaviour
 
     // Step 1: Argos looks at the booth, it appears, and the intro line plays.
 
-    private void Start()
+    private void Awake()
     {
-        _clipsReceiver = _clipsReceiverGameObject.GetComponent<IClipsReceiver>();
+        ClipsReceiver = _clipsReceiverGameObject.GetComponent<IClipsReceiver>();
 
         foreach(ScentCalibrationBooth booth in _booths)
         {
@@ -70,14 +70,14 @@ public class ScentCalibrationScenario : MonoBehaviour
 
     public void StartIntroduction()
     {
-        _clipsReceiver.HandleClip(_introInstruction);
+        ClipsReceiver.HandleClip(_introInstruction);
 
-        foreach(ScentCalibrationBooth booth in _booths)
+        foreach (ScentCalibrationBooth booth in _booths)
         {
-            booth.SetState(EScentCalibrationStep.WAITING);
+            booth.Init();
         }
 
-        if(_booths.Count == 0)
+        if (_booths.Count == 0)
         {
             LLogger.E("No booths given");
             return;
@@ -90,13 +90,16 @@ public class ScentCalibrationScenario : MonoBehaviour
     {
         bool successfulOptimal = ComputeOptimalIntensity();
         SaveResultsToJson(_booths[_boothIndex]);
-                
+
         if (_openDataAtEachBooth)
         {
             ExportCurrentBoothEvaluations(_booths[_boothIndex]);
         }
 
-        if (successfulOptimal) successfulCalibrations++;
+        if (successfulOptimal)
+        {
+            successfulCalibrations++;
+        }
 
         NextBooth();
     }
@@ -127,12 +130,12 @@ public class ScentCalibrationScenario : MonoBehaviour
             }
             else
             {
-                _clipsReceiver.HandleClip(_noOtherScentInstruction);
+                ClipsReceiver.HandleClip(_noOtherScentInstruction);
             }
         }
         else
         {
-            _clipsReceiver.HandleClip(_calibrationSuccessfulInstruction);
+            ClipsReceiver.HandleClip(_calibrationSuccessfulInstruction);
             OnCalibrationEnded.Invoke();
         }
     }
@@ -141,7 +144,7 @@ public class ScentCalibrationScenario : MonoBehaviour
     // longest "how pleasant" trace - i.e. the maximum agreeability recorded during calibration.
     bool ComputeOptimalIntensity()
     {
-        ScentEvaluation best = _booths[_boothIndex].Evaluations
+        ScentEvaluation best = _booths[_boothIndex].ScentData.Evaluations
             .Where(evaluation => evaluation.WasPleasant == EUserResponse.Positive)
             .OrderByDescending(evaluation => evaluation.ResponseMagnitude)
             .FirstOrDefault();
@@ -168,10 +171,10 @@ public class ScentCalibrationScenario : MonoBehaviour
         string directory = Path.Combine(Application.persistentDataPath, "ScentCalibrationResults");
         string csvPath = ScentEvaluationCsvExporter.Save(booth.ScentData, directory);
 
-        if (csvPath != null && _openDataAtEachBooth)
-        {
-            ScentEvaluationCsvExporter.LaunchDataReader(_pythonExecutable, _dataReaderScriptRelativePath, csvPath, booth.ScentData.Name);
-        }
+        //if (csvPath != null && _openDataAtEachBooth)
+        //{
+        //    ScentEvaluationCsvExporter.LaunchDataReader(_pythonExecutable, _dataReaderScriptRelativePath, csvPath, booth.ScentData.Name);
+        //}
     }
 
     void SaveResultsToJson(ScentCalibrationBooth booth)
@@ -192,5 +195,24 @@ public class ScentCalibrationScenario : MonoBehaviour
         {
             LLogger.E($"ScentCalibrationScenario: failed to save results - {e}");
         }
+    }
+
+    internal List<ScentData> GetAllOptimals()
+    {
+        if(_booths.Count == 0 || successfulCalibrations == 0)
+        {
+            LLogger.L("No booth or not any optimal scent");
+            return null;
+        }
+
+        List<ScentData> optimums = new();
+        foreach(ScentCalibrationBooth booth in _booths)
+        {
+            if(booth.ScentData.OptimalParameters != null && booth.ScentData.OptimalParameters.Strength != 0)
+            {
+                optimums.Add(booth.ScentData);
+            }
+        }
+        return optimums;
     }
 }

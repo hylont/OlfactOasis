@@ -278,8 +278,9 @@ MonoBehaviour:
   _strengthSwitchInstruction: "Parfait, on passe \xE0 une nouvelle fiole."
   _fullScentCalibrationInstruction: "Vos pr\xE9f\xE9rences ont \xE9t\xE9 enregistr\xE9es
     avec succ\xE8s."
+  _skipScentInstruction: J'ai compris que l'odeur ne vous convient pas. Je change
+    la prochaine odeur.
   _verbose: 1
-  Evaluations: []
 --- !u!95 &7964280368181480797 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4783665660629243642, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
@@ -390,7 +391,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1513083248370427467, guid: bd5aac650fb784847a29b3a9317d7e57, type: 3}
       propertyPath: instanceId
-      value: fca6065f-2b37-4ff9-81d6-18955bdf4487
+      value: 37441f19-6cb6-458f-864a-56003d060876
       objectReference: {fileID: 0}
     - target: {fileID: 7359510248759130023, guid: bd5aac650fb784847a29b3a9317d7e57, type: 3}
       propertyPath: m_LocalScale.x
