@@ -1,4 +1,7 @@
-﻿public enum EScentCalibrationStep
+﻿using System;
+
+[Serializable]
+public enum EScentCalibrationStep
 {
     NONE, WAITING, WAIT_FOR_PRINTING, READY, DETECTION_QUESTION, VALENCE_QUESTION, VALENCE_TEST
 }

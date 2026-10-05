@@ -57,6 +57,7 @@ public class StoreScenario : MonoBehaviour
                 if (correspondingScent != null)
                 {
                     TargetItem = item;
+                    _diffusionParams = correspondingScent.OptimalParameters;
                     break;
                 }
             }

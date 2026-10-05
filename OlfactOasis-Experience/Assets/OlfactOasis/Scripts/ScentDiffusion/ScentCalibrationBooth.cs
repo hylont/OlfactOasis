@@ -2,6 +2,7 @@
 using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils.Collections;
 using UnityEngine;
 
 public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
@@ -31,6 +32,13 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
     [ShowInInspector] bool _scentDiffused = false;
     bool _endCalled = false;
 
+    [Header("Visual helpers")]
+    [SerializeField] GameObject HelperPerceived;
+    [SerializeField] GameObject HelperPleasant;
+    [SerializeField] GameObject HelperDrawingPleasant;
+    [SerializeField] GameObject HelperDrawingUnpleasant;
+    List<GameObject> _helpers = new();
+
     [Header("Instructions")]
     [TextArea, SerializeField] string _printingInstruction;
     [TextArea, SerializeField] string _pickupDiffuserInstruction;
@@ -54,6 +62,8 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
             enabled = false;
             return;
         }
+
+        _helpers = new(){ HelperPerceived, HelperPleasant, HelperDrawingPleasant, HelperDrawingUnpleasant };
 
         _baseDiffuserPosition = Diffuser.transform.position;
         _baseDiffuserRotation = Diffuser.transform.rotation;
@@ -120,6 +130,8 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
 
         foreach (GameObject CDO in _curveDrawingObjects) CDO.SetActive(false);
 
+        foreach (GameObject helper in _helpers) if(helper != null) helper.SetActive(false);
+
         switch (CurrentStep)
         {
             case EScentCalibrationStep.WAITING:
@@ -143,10 +155,12 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                     ScentData.DefaultVibrationFrequency);
                 break;
             case EScentCalibrationStep.DETECTION_QUESTION:
+                if(HelperPerceived != null) HelperPerceived.SetActive(true);
                 _masterScenario.ClipsReceiver.HandleClip(_detectionQuestionInstruction);
                 Diffuser.gameObject.SetActive(false);
                 break;
             case EScentCalibrationStep.VALENCE_QUESTION:
+                if(HelperPleasant != null) HelperPleasant.SetActive(true);
                 _masterScenario.ClipsReceiver.HandleClip(_valenceQuestionInstruction);
                 break;
             case EScentCalibrationStep.VALENCE_TEST:
@@ -154,9 +168,11 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 if (ScentData.Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Positive)
                 {
                     _masterScenario.ClipsReceiver.HandleClip(_positiveValenceTestInstruction);
+                    if(HelperDrawingPleasant != null) HelperDrawingPleasant.SetActive(true);
                 } else if (ScentData.Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Negative)
                 {
                     _masterScenario.ClipsReceiver.HandleClip(_negativeValenceTestInstruction);
+                    if(HelperDrawingUnpleasant != null) HelperDrawingUnpleasant.SetActive(true);
                 }
                 CurveDrawingMethod.StartDraw(() => StartCoroutine(OnEvaluationEnd_Delayed()));
                 break;
