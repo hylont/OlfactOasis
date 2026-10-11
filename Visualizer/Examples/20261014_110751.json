@@ -1,0 +1,262 @@
+{
+    "ParticipantId": "34fd02f6-8505-47c2-975c-ef7a27655f91",
+    "StartDate": "2026-10-14T11:07:51",
+    "Scents": [
+        {
+            "Name": "STRAWBERRY",
+            "SlotIndex": 3,
+            "DefaultVibrationFrequency": 110000,
+            "Evaluations": [
+                {
+                    "Parameters": {
+                        "SlotIndex": 3,
+                        "Strength": 3,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEGATIVE",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 3,
+                        "Strength": 7,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.24832801520824432
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 3,
+                        "Strength": 20,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.24110151827335358
+                }
+            ],
+            "MildParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "OptimalParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "StrongParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            }
+        },
+        {
+            "Name": "VANILLA",
+            "SlotIndex": 1,
+            "DefaultVibrationFrequency": 110000,
+            "Evaluations": [
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 3,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.5967192649841309
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 7,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEUTRAL_UNDECIDED",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 20,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.5046177506446838
+                }
+            ],
+            "MildParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "OptimalParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "StrongParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            }
+        },
+        {
+            "Name": "BUTANOL",
+            "SlotIndex": 4,
+            "DefaultVibrationFrequency": 110000,
+            "Evaluations": [
+                {
+                    "Parameters": {
+                        "SlotIndex": 4,
+                        "Strength": 3,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEGATIVE",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 4,
+                        "Strength": 7,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEGATIVE",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 4,
+                        "Strength": 20,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEUTRAL_UNDECIDED",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 4,
+                        "Strength": 55,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEUTRAL_UNDECIDED",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 4,
+                        "Strength": 100,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEUTRAL_UNDECIDED",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                }
+            ],
+            "MildParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "OptimalParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "StrongParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            }
+        },
+        {
+            "Name": "LAVENDER",
+            "SlotIndex": 2,
+            "DefaultVibrationFrequency": 110000,
+            "Evaluations": [
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 3,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 1.7539039850234985
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 7,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 1.4144563674926758
+                }
+            ],
+            "MildParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "OptimalParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "StrongParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            }
+        }
+    ]
+}

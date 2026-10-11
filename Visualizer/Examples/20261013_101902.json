@@ -1,0 +1,91 @@
+{
+    "ParticipantId": "f5ee8c72-98e6-45b7-a1cd-7be8a7d83351",
+    "StartDate": "2026-10-13T10:19:02",
+    "Scents": [
+        {
+            "Name": "MINT",
+            "SlotIndex": 2,
+            "DefaultVibrationFrequency": 110000,
+            "Evaluations": [
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 3,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEGATIVE",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 7,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEUTRAL_UNDECIDED",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 20,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "POSITIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.6448800563812256
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 55,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "POSITIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 1.1649367809295654
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 2,
+                        "Strength": 100,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "POSITIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.5710662007331848
+                }
+            ],
+            "MildParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "OptimalParameters": {
+                "SlotIndex": 2,
+                "Strength": 55,
+                "Duration": 3000,
+                "Frequency": 110000
+            },
+            "StrongParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            }
+        }
+    ]
+}

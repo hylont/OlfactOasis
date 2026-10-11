@@ -442,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7635248392953121739, guid: 33fe1c1d36f7a214682818ab5f336493, type: 3}
       propertyPath: m_Name
-      value: P_OculusHandThumbsUp Variant
+      value: P_OculusHandThumbsUp
       objectReference: {fileID: 0}
     - target: {fileID: 8764064259594904020, guid: 33fe1c1d36f7a214682818ab5f336493, type: 3}
       propertyPath: m_LocalRotation.w

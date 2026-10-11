@@ -1,0 +1,91 @@
+{
+    "ParticipantId": "c4a334bf-c6cd-45e9-bb04-9a79d7a7a3cc",
+    "StartDate": "2026-10-12T09:10:36",
+    "Scents": [
+        {
+            "Name": "DARK_CHOCOLATE",
+            "SlotIndex": 1,
+            "DefaultVibrationFrequency": 110000,
+            "Evaluations": [
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 3,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "NEGATIVE",
+                    "WasPleasant": "NONE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.0
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 7,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "POSITIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.4152359366416931
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 20,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "POSITIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.8526632189750671
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 55,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "POSITIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 1.4593356847763062
+                },
+                {
+                    "Parameters": {
+                        "SlotIndex": 1,
+                        "Strength": 100,
+                        "Duration": 3000,
+                        "Frequency": 110000
+                    },
+                    "WasPerceived": "POSITIVE",
+                    "WasPleasant": "NEGATIVE",
+                    "ResponseCurvePoints": [],
+                    "ResponseMagnitude": 0.6392767429351807
+                }
+            ],
+            "MildParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            },
+            "OptimalParameters": {
+                "SlotIndex": 1,
+                "Strength": 55,
+                "Duration": 3000,
+                "Frequency": 110000
+            },
+            "StrongParameters": {
+                "SlotIndex": 0,
+                "Strength": 0,
+                "Duration": 0,
+                "Frequency": 0
+            }
+        }
+    ]
+}

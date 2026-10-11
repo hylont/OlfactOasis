@@ -8294,10 +8294,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1893421469772018354, guid: 06b47beff8a3ee44f8c4eaa1b3da03a1, type: 3}
-      propertyPath: _ignoreOlfyNotReady
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1893421469772018354, guid: 06b47beff8a3ee44f8c4eaa1b3da03a1, type: 3}
       propertyPath: OnOlfyReady.m_PersistentCalls.m_Calls.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -12464,18 +12460,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnThumbUpPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 171874956}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -17368,7 +17352,7 @@ GameObject:
   - component: {fileID: 215850568}
   - component: {fileID: 215850567}
   m_Layer: 0
-  m_Name: ThumbHorizontalRight
+  m_Name: ThumbsHorizontalRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17405,18 +17389,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnHorizontalHandPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1430144812}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -25350,7 +25322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &316645485
 Transform:
   m_ObjectHideFlags: 0
@@ -25382,18 +25354,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnThumbDownPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 373838392}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -25590,6 +25550,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1474754379105486669, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
       propertyPath: _powerOnAtStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474754379105486669, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
+      propertyPath: _facesConfig.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474754379105486669, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
+      propertyPath: _facesConfig.reorderableList.isExpanded
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3488809820876646742, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
@@ -39968,10 +39936,11 @@ Transform:
   m_GameObject: {fileID: 511341046}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.118, y: 0, z: -0.518}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1390388479}
   - {fileID: 2141604841}
   - {fileID: 1077030998}
   m_Father: {fileID: 1737613583}
@@ -41018,18 +40987,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnRightPinchPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 666924367}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -41045,18 +41002,6 @@ MonoBehaviour:
   _whenDeactivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnRightPinchReleased
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 666924367}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -74502,6 +74447,7 @@ MonoBehaviour:
   - {fileID: 808546213}
   - {fileID: 300564624}
   MinValidBoothsNeeded: 1
+  _randomizeBoothsOrder: 1
   ScentStrengthsConfigs: 0300000007000000140000003700000064000000
   ScentDuration: 3000
   PerceptionQuestionDelay: 10
@@ -74570,10 +74516,6 @@ MonoBehaviour:
     si aucune odeur n'a \xE9t\xE9 consid\xE9r\xE9e comme agr\xE9able. Vous pouvez
     retirer le casque."
   _verbose: 0
-  _pythonExecutable: python
-  _dataReaderScriptRelativePath: ../../OlfactoasisDataReader.py
-  _openDataAtEachBooth: 1
-  _openDataAtCalibrationEnd: 1
 --- !u!1001 &934869775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78859,11 +78801,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   LeftHand: {fileID: 79342699}
   LeftFingerTip: {fileID: 973808039}
+  _leftHandMaterial: {fileID: 2042197422}
   RightHand: {fileID: 236662747}
   RightFingerTip: {fileID: 973808038}
+  _rightHandMaterial: {fileID: 2042197421}
   Head: {fileID: 26216503}
-  SameGestureNotificationsCooldown: 2
-  DebugMode: 0
+  GestureNotificationsCooldown: 2
+  _poseHoldDuration: 0.5
+  _cooldownVisuals:
+    TopColor: {r: 0.335849, g: 0.335849, b: 0.335849, a: 0.39215687}
+    BottomColor: {r: 0.17735851, g: 0.17735851, b: 0.17735851, a: 0.39215687}
+    Opacity: 0.4
+  _gestures:
+  - Gesture: 0
+    Visuals:
+      TopColor: {r: 1, g: 1, b: 1, a: 1}
+      BottomColor: {r: 0.2528302, g: 0.2528302, b: 0.2528302, a: 1}
+      Opacity: 0.9
+    LeftEventWrapper: {fileID: 0}
+    RightEventWrapper: {fileID: 0}
+    ReleaseGesture: 0
+    IgnoreCooldown: 0
+  - Gesture: 1
+    Visuals:
+      TopColor: {r: 0.020754695, g: 1, b: 0.06880288, a: 1}
+      BottomColor: {r: 0.017642988, g: 0.3735848, b: 0, a: 1}
+      Opacity: 0.9
+    LeftEventWrapper: {fileID: 2049227559}
+    RightEventWrapper: {fileID: 144801498}
+    ReleaseGesture: 0
+    IgnoreCooldown: 0
+  - Gesture: 2
+    Visuals:
+      TopColor: {r: 1, g: 0.17176138, b: 0.019607842, a: 1}
+      BottomColor: {r: 0.37254903, g: 0.07362447, b: 0, a: 1}
+      Opacity: 0.9
+    LeftEventWrapper: {fileID: 316645486}
+    RightEventWrapper: {fileID: 1656265578}
+    ReleaseGesture: 0
+    IgnoreCooldown: 0
+  - Gesture: 4
+    Visuals:
+      TopColor: {r: 1, g: 0.7163037, b: 0.019607842, a: 1}
+      BottomColor: {r: 0.37254903, g: 0.30799827, b: 0, a: 1}
+      Opacity: 0.9
+    LeftEventWrapper: {fileID: 2009371639}
+    RightEventWrapper: {fileID: 215850567}
+    ReleaseGesture: 0
+    IgnoreCooldown: 0
+  - Gesture: 3
+    Visuals:
+      TopColor: {r: 0.019607842, g: 0.52352536, b: 1, a: 1}
+      BottomColor: {r: 0, g: 0.18159525, b: 0.37254903, a: 1}
+      Opacity: 0.9
+    LeftEventWrapper: {fileID: 1674194459}
+    RightEventWrapper: {fileID: 2001652647}
+    ReleaseGesture: 0
+    IgnoreCooldown: 0
+  - Gesture: 7
+    Visuals:
+      TopColor: {r: 0.5833084, g: 0.019607842, b: 1, a: 1}
+      BottomColor: {r: 0.19880082, g: 0, b: 0.37254903, a: 1}
+      Opacity: 0.9
+    LeftEventWrapper: {fileID: 1002251436}
+    RightEventWrapper: {fileID: 522744987}
+    ReleaseGesture: 8
+    IgnoreCooldown: 1
   _debug: 0
 --- !u!1001 &987921556
 PrefabInstance:
@@ -80109,18 +80112,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnLeftPinchPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 258028573}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -80136,18 +80127,6 @@ MonoBehaviour:
   _whenDeactivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnLeftPinchReleased
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 258028573}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -86250,6 +86229,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 511341047}
     m_Modifications:
+    - target: {fileID: 2193720263166300504, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2392479539032138666, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2718662028247090814, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -86260,11 +86247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4621960263036574331, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.009
+      value: -0.0886
       objectReference: {fileID: 0}
     - target: {fileID: 4621960263036574331, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.189
+      value: 0.1904
       objectReference: {fileID: 0}
     - target: {fileID: 4912488126503228234, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
       propertyPath: m_Name
@@ -86316,11 +86303,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7146417375273456163, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7477503331948371905, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
       propertyPath: CurveDrawingMethod
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180275429351106697, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0652
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180275429351106697, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1909
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7477503331948371905, guid: deb21dea5b7b3b74897016fdce712ef1, type: 3}
@@ -110535,13 +110530,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390388478}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5664388, y: -0.5282367, z: 0.56013125, w: -0.29388103}
-  m_LocalPosition: {x: 0.9429783, y: 0.12288797, z: 0.8176375}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 87181788}
-  m_Father: {fileID: 2141604841}
+  m_Father: {fileID: 511341047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1390388480
 MonoBehaviour:
@@ -113563,6 +113558,10 @@ PrefabInstance:
     - target: {fileID: 8742972099518605786, guid: e58afbe5f79a6e54098917b6a6ca58e2, type: 3}
       propertyPath: ScentData.SlotIndex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8742972099518605786, guid: e58afbe5f79a6e54098917b6a6ca58e2, type: 3}
+      propertyPath: ScentData.Evaluations.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8749244541473464874, guid: e58afbe5f79a6e54098917b6a6ca58e2, type: 3}
       propertyPath: instanceId
@@ -131579,18 +131578,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnThumbDownPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 373838392}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -133545,18 +133532,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnLeftPointFingerPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1333303354}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -161164,18 +161139,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnRightPointFingerPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 211768120}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -161728,7 +161691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2009371638
 Transform:
   m_ObjectHideFlags: 0
@@ -161760,18 +161723,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnHorizontalHandPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1430144812}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -161814,7 +161765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.ActiveStateGroup
   _activeStates:
   - {fileID: 2009371642}
-  - {fileID: 2009371640}
+  - {fileID: 2009371641}
   _logicOperator: 0
 --- !u!114 &2009371641
 MonoBehaviour:
@@ -164686,6 +164637,78 @@ PrefabInstance:
       propertyPath: _centerEyeCamera
       value: 
       objectReference: {fileID: 26216505}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].name
+      value: _OutlineColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].name
+      value: _ColorBottom
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].name
+      value: _ColorTop
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[0].name
+      value: _OutlineOpacity
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[1].name
+      value: _Opacity
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[0].value
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[1].value
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.b
+      value: 0.4641509
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.g
+      value: 0.4641509
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.r
+      value: 0.4641509
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].value.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3780444956555992291, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_TagString
       value: FingerTip
@@ -164758,6 +164781,94 @@ PrefabInstance:
       propertyPath: _ovrCameraRig
       value: 
       objectReference: {fileID: 1685305933}
+    - target: {fileID: 6587332456759456299, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0564
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].name
+      value: _OutlineColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].name
+      value: _ColorBottom
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].name
+      value: _ColorTop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[0].name
+      value: _OutlineOpacity
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[1].name
+      value: _Opacity
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[0].value
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _floatProperties.Array.data[1].value
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.b
+      value: 0.4641509
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.g
+      value: 0.4641509
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[1].value.r
+      value: 0.4641509
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].value.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].value.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].value.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _colorProperties.Array.data[2].value.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8702425413884958787, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -164810,6 +164921,28 @@ MonoBehaviour:
   installationRoutineCheckpoint:
     _installationRoutineId: 2063f481-1b63-4eda-9ee8-a00df98536bc
     _installationVariants: []
+--- !u!114 &2042197421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8680154697495280226, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+  m_PrefabInstance: {fileID: 2042197417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e48d93b64a9ae4f9fd5a728c8f51af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2042197422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3400325201900728240, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+  m_PrefabInstance: {fileID: 2042197417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e48d93b64a9ae4f9fd5a728c8f51af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2043427518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165418,7 +165551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2049227555
 Transform:
   m_ObjectHideFlags: 0
@@ -165505,18 +165638,6 @@ MonoBehaviour:
   _whenActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985608856}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnThumbUpPerformed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 171874956}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_enabled
@@ -170433,7 +170554,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.052134395
+      value: -0.401
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -170441,23 +170562,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.6278651
+      value: -0.845
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.29956195
+      value: 0.0049722195
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5724479
+      value: -0.21637303
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.52503574
+      value: 0.604463
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5539889
+      value: -0.76666975
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -170465,7 +170586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 122.887
+      value: 62.53
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -170477,10 +170598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1390388479}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
 --- !u!4 &2141604841 stripped

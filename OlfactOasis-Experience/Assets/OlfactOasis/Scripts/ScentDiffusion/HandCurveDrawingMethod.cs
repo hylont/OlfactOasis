@@ -5,8 +5,8 @@ using UnityEngine;
 // line in the air, drawn live via a LineRenderer. Releasing and pinching again continues the same line.
 // The drawing is validated (EndDraw) by pressing _validateButton, and wiped by pressing _clearButton.
 //
-// Relies on Player's PinchReleased gesture to know when the pinch stops : the pinch ActiveStateUnityEventWrapper's
-// _whenDeactivated must call Player.OnLeftPinchReleased / OnRightPinchReleased.
+// Relies on Player's PinchReleased gesture to know when the pinch stops : the Pinch GestureConfig of the Player
+// must have ReleaseGesture = PinchReleased (and IgnoreCooldown, so that neither the pinch nor its release is dropped).
 public class HandCurveDrawingMethod : AbstractCurveDrawingMethod, IPlayerGesturesListener
 {
     // PushButton listeners don't say which button fired, so each button gets its own relay.

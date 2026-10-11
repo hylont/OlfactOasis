@@ -1,8 +1,6 @@
 using EditorAttributes;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,16 +8,12 @@ using UnityEngine.Events;
 
 public class ScentCalibrationScenario : MonoBehaviour
 {
-    [Serializable]
-    class ScentCalibrationResults
-    {
-        public List<ScentData> ScentsData;
-    }
-
     [Header("Protocol config")]
 
     [SerializeField] List<ScentCalibrationBooth> _booths = new();
     [SerializeField] int MinValidBoothsNeeded = 1;
+    [Tooltip("Presents the booths in a random order, so that no scent is favoured by always being tried first.")]
+    [SerializeField] bool _randomizeBoothsOrder = true;
     int _boothIndex = -1;
 
     //1x3, 3x3, 7x3, 20x3, 55x3, 100x3
@@ -31,7 +25,7 @@ public class ScentCalibrationScenario : MonoBehaviour
     public float MinDistanceFromHeadToDiffuse = .15f;
 
     [ShowInInspector] int successfulCalibrations = 0;
-
+    ScentCalibrationResults _results;
 
     [Header("Dependencies")]
     [SerializeField] GameObject _clipsReceiverGameObject;
@@ -48,13 +42,6 @@ public class ScentCalibrationScenario : MonoBehaviour
     [TextArea, SerializeField] string _noOtherScentInstruction;
     [Header("Debug")]
     [SerializeField] bool _verbose = false;
-
-    [Header("Python data reader")]
-    [SerializeField] string _pythonExecutable = "python";
-    [SerializeField] string _dataReaderScriptRelativePath = "../../OlfactoasisDataReader.py";
-    [SerializeField] bool _openDataAtEachBooth = true;
-    [SerializeField] bool _openDataAtCalibrationEnd = true;
-
 
     // Step 1: Argos looks at the booth, it appears, and the intro line plays.
 
@@ -83,18 +70,29 @@ public class ScentCalibrationScenario : MonoBehaviour
             return;
         }
 
+        if (_randomizeBoothsOrder) ShuffleBooths();
+
+        _results = new ScentCalibrationResults(ParticipantData.GetID());
         NextBooth();
+    }
+
+    // Fisher-Yates shuffle
+    void ShuffleBooths()
+    {
+        for (int i = _booths.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (_booths[i], _booths[j]) = (_booths[j], _booths[i]);
+        }
+
+        if (_verbose) LLogger.L($"Booths order: {string.Join(", ", _booths.Select(booth => booth.ScentData.Name))}");
     }
 
     public void OnBoothEnded()
     {
         bool successfulOptimal = ComputeOptimalIntensity();
-        SaveResultsToJson(_booths[_boothIndex]);
-
-        if (_openDataAtEachBooth)
-        {
-            ExportCurrentBoothEvaluations(_booths[_boothIndex]);
-        }
+        _results.AddScent(_booths[_boothIndex].ScentData);
+        _results.Save();
 
         if (successfulOptimal)
         {
@@ -151,50 +149,13 @@ public class ScentCalibrationScenario : MonoBehaviour
 
         if (best == null)
         {
-            LLogger.W("ScentCalibrationScenario: no pleasant evaluation recorded, falling back to the last tried strength.");
-            return false;
-        }
-
-        if (best == null)
-        {
-            LLogger.E("ScentCalibrationScenario: no evaluation recorded at all, can't determine an optimal intensity.");
+            LLogger.W("ScentCalibrationScenario: no pleasant evaluation recorded, can't determine an optimal intensity.");
             return false;
         }
 
         _booths[_boothIndex].ScentData.OptimalParameters = best.Parameters;
 
         return true;
-    }
-
-    void ExportCurrentBoothEvaluations(ScentCalibrationBooth booth)
-    {
-        string directory = Path.Combine(Application.persistentDataPath, "ScentCalibrationResults");
-        string csvPath = ScentEvaluationCsvExporter.Save(booth.ScentData, directory);
-
-        //if (csvPath != null && _openDataAtEachBooth)
-        //{
-        //    ScentEvaluationCsvExporter.LaunchDataReader(_pythonExecutable, _dataReaderScriptRelativePath, csvPath, booth.ScentData.Name);
-        //}
-    }
-
-    void SaveResultsToJson(ScentCalibrationBooth booth)
-    {
-        ScentCalibrationResults results = new() { ScentsData = new List<ScentData> { booth.ScentData } };
-        string json = JsonUtility.ToJson(results, true);
-
-        string directory = Path.Combine(Application.persistentDataPath, "ScentCalibrationResults");
-        string path = Path.Combine(directory, $"{DateTime.Now:yyyyMMdd_HHmmss}.json");
-
-        try
-        {
-            Directory.CreateDirectory(directory);
-            File.WriteAllText(path, json);
-            LLogger.L($"ScentCalibrationScenario: results saved to {path}");
-        }
-        catch (Exception e)
-        {
-            LLogger.E($"ScentCalibrationScenario: failed to save results - {e}");
-        }
     }
 
     internal List<ScentData> GetAllOptimals()

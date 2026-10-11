@@ -27,6 +27,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
     Vector3 _baseDiffuserPosition;
     Quaternion _baseDiffuserRotation;
     ScentDiffusionParameters _currentParameters;
+    ScentEvaluation _currentEvaluation;
     [ShowInInspector] bool _isPrinting = false;
     [ShowInInspector] float _printdurationTimer;
     [ShowInInspector] bool _scentDiffused = false;
@@ -146,13 +147,14 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 _masterScenario.ClipsReceiver.HandleClip(_pickupDiffuserInstruction);
                 Diffuser.gameObject.SetActive(true);
                 Diffuser.transform.SetPositionAndRotation(_baseDiffuserPosition, _baseDiffuserRotation);
-                ScentData.Evaluations.Add(new ScentEvaluation());
                 _isPrinting = false;
                 _scentDiffused = false;
                 _currentParameters = new ScentDiffusionParameters(ScentData.SlotIndex,
                     _masterScenario.ScentStrengthsConfigs[_currentStrengthIndex],
                     _masterScenario.ScentDuration,
                     ScentData.DefaultVibrationFrequency);
+                _currentEvaluation = new ScentEvaluation(_currentParameters);
+                ScentData.Evaluations.Add(_currentEvaluation);
                 break;
             case EScentCalibrationStep.DETECTION_QUESTION:
                 if(HelperPerceived != null) HelperPerceived.SetActive(true);
@@ -165,11 +167,11 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 break;
             case EScentCalibrationStep.VALENCE_TEST:
                 foreach (GameObject CDO in _curveDrawingObjects) CDO.SetActive(true);
-                if (ScentData.Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Positive)
+                if (_currentEvaluation.WasPleasant == EUserResponse.Positive)
                 {
                     _masterScenario.ClipsReceiver.HandleClip(_positiveValenceTestInstruction);
                     if(HelperDrawingPleasant != null) HelperDrawingPleasant.SetActive(true);
-                } else if (ScentData.Evaluations[_currentStrengthIndex].WasPleasant == EUserResponse.Negative)
+                } else if (_currentEvaluation.WasPleasant == EUserResponse.Negative)
                 {
                     _masterScenario.ClipsReceiver.HandleClip(_negativeValenceTestInstruction);
                     if(HelperDrawingUnpleasant != null) HelperDrawingUnpleasant.SetActive(true);
@@ -215,9 +217,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
     {
         if (!_endCalled)
         {
-            ScentData.Evaluations[_currentStrengthIndex].Parameters = _currentParameters;
-            ScentData.Evaluations[_currentStrengthIndex].ResponseCurvePoints = CurveDrawingMethod.GetPoints();
-            ScentData.Evaluations[_currentStrengthIndex].ResponseMagnitude = ScentEvaluation.GetResponseMagnitude(CurveDrawingMethod.GetPoints());
+            _currentEvaluation.SetResponseCurve(CurveDrawingMethod.GetPoints());
 
             _endCalled = true;
             yield return new WaitForSeconds(1f);
@@ -237,7 +237,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
         {
             if (gesture == EPlayerGesture.ThumbUp)
             {
-                ScentData.Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.Positive;
+                _currentEvaluation.WasPerceived = EUserResponse.Positive;
 
                 SetState(EScentCalibrationStep.VALENCE_QUESTION);
             }
@@ -245,12 +245,12 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
             {
                 if (gesture == EPlayerGesture.ThumbDown)
                 {
-                    ScentData.Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.Negative;
+                    _currentEvaluation.WasPerceived = EUserResponse.Negative;
                     OnEvaluationEnd();
                 
                 }else if (gesture == EPlayerGesture.HorizontalHand)
                 {
-                    ScentData.Evaluations[_currentStrengthIndex].WasPerceived = EUserResponse.NeutralUndecided;
+                    _currentEvaluation.WasPerceived = EUserResponse.NeutralUndecided;
                     OnEvaluationEnd();
                 }
             }
@@ -258,18 +258,18 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
         {
             if (gesture == EPlayerGesture.HorizontalHand)
             {
-                ScentData.Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.NeutralUndecided;
+                _currentEvaluation.WasPleasant = EUserResponse.NeutralUndecided;
                 OnEvaluationEnd();
             }
             else
             {
                 if (gesture == EPlayerGesture.ThumbUp)
                 {
-                    ScentData.Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.Positive;
+                    _currentEvaluation.WasPleasant = EUserResponse.Positive;
                     SetState(EScentCalibrationStep.VALENCE_TEST);
                 }else if (gesture == EPlayerGesture.ThumbDown)
                 {
-                    ScentData.Evaluations[_currentStrengthIndex].WasPleasant = EUserResponse.Negative;
+                    _currentEvaluation.WasPleasant = EUserResponse.Negative;
                     SetState(EScentCalibrationStep.VALENCE_TEST);
                 }
             }

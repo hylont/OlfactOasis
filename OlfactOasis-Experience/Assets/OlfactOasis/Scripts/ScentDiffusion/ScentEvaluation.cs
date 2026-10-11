@@ -2,30 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// One diffusion of a scent at a given strength, and how the participant responded to it.
 [Serializable]
 public class ScentEvaluation
 {
     public ScentDiffusionParameters Parameters;
     public EUserResponse WasPerceived;
     public EUserResponse WasPleasant;
-    public List<Vector3> ResponseCurvePoints;
+    public List<Vector3> ResponseCurvePoints = new();
     public float ResponseMagnitude;
 
-    public ScentEvaluation()
-    {
-
-    }
-
-    public ScentEvaluation(ScentDiffusionParameters parameters, EUserResponse wasPerceived, EUserResponse wasPleasant, List<Vector3> responseCurvePoints)
+    public ScentEvaluation(ScentDiffusionParameters parameters)
     {
         Parameters = parameters;
-        WasPerceived = wasPerceived;
-        WasPleasant = wasPleasant;
-        ResponseCurvePoints = responseCurvePoints;
+    }
+
+    // Copies the points: the drawing method reuses its own list and clears it as soon as the draw ends
+    public void SetResponseCurve(List<Vector3> curvePoints)
+    {
+        ResponseCurvePoints = new List<Vector3>(curvePoints);
         ResponseMagnitude = GetResponseMagnitude(ResponseCurvePoints);
     }
 
-    public static float GetResponseMagnitude(List<Vector3> curvePointsList)
+    static float GetResponseMagnitude(List<Vector3> curvePointsList)
     {
         if(curvePointsList.Count < 2)
         {

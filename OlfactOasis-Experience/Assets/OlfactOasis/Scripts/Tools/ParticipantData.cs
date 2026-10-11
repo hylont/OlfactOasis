@@ -4,11 +4,6 @@
 
     private static bool _generateID = true;
 
-    public static void SetID(string id)
-    {
-        _ID = id;
-    }
-
     public static string GetID()
     {
         if (_ID == string.Empty)
