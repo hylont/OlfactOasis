@@ -40,6 +40,7 @@ public class ArgosAI : MovementAI, IClipsReceiver
     [SerializeField] float _lookAtAngleThreshold = 2f;
 
     [Header("Talking")]
+    [SerializeField] bool _lookCameraWhenTalking = true;
     public AudioSource TalkingAudioSource;
     public AudioDescriptionCanvas AudioDescription;
     [SerializeField] int _talkingSampleWindow = 256;
@@ -126,6 +127,11 @@ public class ArgosAI : MovementAI, IClipsReceiver
 
     public void HandleClip(string clipID)
     {
+        if (_lookCameraWhenTalking)
+        {
+            LookAtCamera();
+        }
+
         if(_receiver != null)
         {
             _receiver.HandleClip(clipID);

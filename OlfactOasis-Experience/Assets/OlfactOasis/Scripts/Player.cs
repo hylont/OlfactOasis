@@ -153,7 +153,8 @@ public class Player : MonoBehaviour
 
         if (_debug) LLogger.L($"{gesture} recognized ({side})");
 
-        foreach (IPlayerGesturesListener listener in _listeners)
+        // Iterates over a copy : a listener may remove itself (e.g. a booth ending on a thumb down)
+        foreach (IPlayerGesturesListener listener in _listeners.ToArray())
         {
             listener.OnGesturePerformed(gesture, side, direction);
         }

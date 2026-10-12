@@ -1458,18 +1458,16 @@ MonoBehaviour:
   HelperPleasant: {fileID: 2093924760393242862}
   HelperDrawingPleasant: {fileID: 3405392673468719216}
   HelperDrawingUnpleasant: {fileID: 1173747145801934156}
-  _printingInstruction: "La fiole d'odeurs s'imprime, soyez patient.\t"
+  _printingInstruction: La fiole d'odeurs arrive.
   _pickupDiffuserInstruction: "C'est pr\xEAt. Attrapez la fiole et rapprochez-la
     de votre nez."
   _detectionQuestionInstruction: Avez-vous senti une odeur ?
   _valenceQuestionInstruction: "Est-ce que cette odeur \xE9tait d\xE9sagr\xE9able
     ou agr\xE9able ?"
-  _positiveValenceTestInstruction: "Maintenant, tracez une ligne de la longeur que
-    vous souhaitez pour exprimer \xE0 quel point l'odeur vous a plu.\nN'h\xE9sitez
-    pas \xE0 utiliser les boutons CONFIRMER et REESSAYER."
-  _negativeValenceTestInstruction: "Maintenant, tracez une ligne de la longeur que
-    vous souhaitez pour exprimer \xE0 quel point l'odeur vous a semb\xE9 d\xE9sagr\xE9able.\nN'h\xE9sitez
-    pas \xE0 utiliser les boutons CONFIRMER et REESSAYER."
+  _positiveValenceTestInstruction: "Maintenant, tracez une ligne de la longeur repr\xE9sentant
+    \xE0 quel point l'odeur vous a plu. Appuyez ensuite sur CONFIRMER."
+  _negativeValenceTestInstruction: "Maintenant, tracez une ligne de la longeur repr\xE9sentant
+    \xE0 quel point l'odeur vous a d\xE9plu. Appuyez ensuite sur CONFIRMER."
   _strengthSwitchInstruction: "Parfait, on passe \xE0 une nouvelle fiole."
   _fullScentCalibrationInstruction: "Vos pr\xE9f\xE9rences ont \xE9t\xE9 enregistr\xE9es
     avec succ\xE8s."

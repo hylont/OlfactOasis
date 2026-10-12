@@ -47,6 +47,9 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
         }
         else
         {
+            // The ray is given in world coordinates (P_RayLine is authored in local space)
+            _pointingRayLine.useWorldSpace = true;
+            _pointingRayLine.positionCount = 2;
             _pointingRayLine.enabled = false;
         }
     }
@@ -91,11 +94,7 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
         _screenFader.FadeToBlack();
         yield return new WaitForSeconds(fadeDuration);
 
-        if (_pointingRayLine != null)
-        {
-            _pointingRayLine.enabled = false;
-            _pointingRayLine.SetPositions(new Vector3[] { });
-        }
+        if (_pointingRayLine != null) _pointingRayLine.enabled = false;
 
         _screenFader.FadeToHidden();
         
