@@ -83,14 +83,12 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
             if (hit.collider.CompareTag(_walkableTag))
             {
                 GameObject target = hit.collider.gameObject;
-                LLogger.L($"Teleported from {(_currentTeleporter == null ? "nowhere" : _currentTeleporter.name)} to {target.name}");
+                //LLogger.L($"Teleported from {(_currentTeleporter == null ? "nowhere" : _currentTeleporter.name)} to {target.name}");
 
                 if (target == _currentTeleporter) return;
                 _currentTeleporter = target;
 
                 StartCoroutine(TeleportAfterDelay(target.transform.position, _screenFader.FadeDuration));
-
-                OnTeleported?.Invoke();
             }
         }
     }
@@ -142,5 +140,7 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
         
         _playerRig.transform.position = point;
         IsTeleporting = false;
+
+        OnTeleported?.Invoke();
     }
 }

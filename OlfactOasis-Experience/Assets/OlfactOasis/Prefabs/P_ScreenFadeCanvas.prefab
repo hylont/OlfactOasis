@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenFader
   _fadeCanvasGroup: {fileID: 8058817984787192934}
-  FadeDuration: 2
+  _fadeOutAtStart: 0
+  FadeDuration: 1.5
 --- !u!225 &8058817984787192934
 CanvasGroup:
   m_ObjectHideFlags: 0

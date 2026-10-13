@@ -25413,7 +25413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.ActiveStateGroup
   _activeStates:
   - {fileID: 316645489}
-  - {fileID: 316645487}
+  - {fileID: 316645488}
   _logicOperator: 0
 --- !u!114 &316645488
 MonoBehaviour:
@@ -25452,7 +25452,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.PoseDetection.ShapeRecognizerActiveState
   _fingerFeatureStateProvider: {fileID: 1333231152}
   _shapes:
-  - {fileID: 11400000, guid: 55734ff6ac9c48443ab37831fdd69d7b, type: 2}
   - {fileID: 11400000, guid: b24bfe58d749d144d98a6d242b74fff2, type: 2}
 --- !u!1001 &317751467
 PrefabInstance:
@@ -25579,7 +25578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3488809820876646742, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
       propertyPath: _debug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4288962623671483604, guid: e8e2d0d9fe2e995469b1ae399022e120, type: 3}
       propertyPath: m_LocalPosition.x
@@ -134362,7 +134361,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.PoseDetection.ShapeRecognizerActiveState
   _fingerFeatureStateProvider: {fileID: 507776458}
   _shapes:
-  - {fileID: 11400000, guid: 55734ff6ac9c48443ab37831fdd69d7b, type: 2}
   - {fileID: 11400000, guid: b24bfe58d749d144d98a6d242b74fff2, type: 2}
 --- !u!1001 &1657341287
 PrefabInstance:
@@ -168960,7 +168958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.ActiveStateGroup
   _activeStates:
   - {fileID: 2049227556}
-  - {fileID: 2049227558}
+  - {fileID: 2049227557}
   _logicOperator: 0
 --- !u!114 &2049227559
 MonoBehaviour:

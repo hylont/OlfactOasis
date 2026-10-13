@@ -24,6 +24,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
     
     [Header("Diffusing object")]
     public Grabbable Diffuser;
+    bool _vialGrabbed = false;
     Vector3 _baseDiffuserPosition;
     Quaternion _baseDiffuserRotation;
     ScentDiffusionParameters _currentParameters;
@@ -72,6 +73,18 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
         _masterScenario.Player.AddListener(this);
 
         SetState(EScentCalibrationStep.WAITING);
+
+        Diffuser.WhenPointerEventRaised += (pointerEvent) =>
+        {
+            if (pointerEvent.Type == PointerEventType.Select)
+            {
+                _vialGrabbed = true;
+            }
+            else if (pointerEvent.Type == PointerEventType.Unselect)
+            {
+                _vialGrabbed = false;
+            }
+        };
     }
 
     private void Update()
@@ -90,7 +103,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 }
             }
         }
-        else if(CurrentStep == EScentCalibrationStep.READY && !_scentDiffused)
+        else if(CurrentStep == EScentCalibrationStep.READY && !_scentDiffused && _vialGrabbed)
         {
             float dist = Vector3.Distance(Diffuser.transform.position, _masterScenario.Player.Head.transform.position);
             if(dist <= _masterScenario.MinDistanceFromHeadToDiffuse)
