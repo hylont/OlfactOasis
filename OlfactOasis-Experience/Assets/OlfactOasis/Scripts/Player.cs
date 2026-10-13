@@ -271,7 +271,7 @@ public class Player : MonoBehaviour
         };
     }
 
-    Ray GetPointingRay(ESide side)
+    public Ray GetPointingRay(ESide side)
     {
         Transform fingerTip = (side == ESide.Left ? LeftFingerTip : RightFingerTip).transform;
         return new Ray(fingerTip.position, fingerTip.forward);

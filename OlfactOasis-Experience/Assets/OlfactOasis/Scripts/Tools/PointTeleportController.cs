@@ -1,3 +1,4 @@
+using EditorAttributes;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -14,12 +15,17 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
     [SerializeField] ScreenFader _screenFader;
 
     [Header("Config")]
+    [SerializeField] GameObject _baseTeleporter;
     [SerializeField] string _walkableTag = "WALKABLE";
     [SerializeField] float _maxDistance = 50f;
 
     public UnityEvent OnTeleported;
 
     public bool IsTeleporting = false;
+    [ShowInInspector] bool _isPointing = false;
+    [ShowInInspector] ESide hand = ESide.Other;
+
+    GameObject _currentTeleporter = null;
 
     void Start()
     {
@@ -52,6 +58,48 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
             _pointingRayLine.positionCount = 2;
             _pointingRayLine.enabled = false;
         }
+
+        if (_baseTeleporter != null) _currentTeleporter = _baseTeleporter;
+    }
+
+    void Update()
+    {
+        if(!_isPointing || hand == ESide.Other || IsTeleporting)
+        {
+            if (_pointingRayLine != null) _pointingRayLine.enabled = false;
+            return;
+        }
+
+        Ray ray = _player.GetPointingRay(hand);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance))
+        {
+
+            if (_pointingRayLine != null)
+            {
+                ShowLineRenderer(ray, hit);
+            }
+
+            if (hit.collider.CompareTag(_walkableTag))
+            {
+                GameObject target = hit.collider.gameObject;
+                LLogger.L($"Teleported from {(_currentTeleporter == null ? "nowhere" : _currentTeleporter.name)} to {target.name}");
+
+                if (target == _currentTeleporter) return;
+                _currentTeleporter = target;
+
+                StartCoroutine(TeleportAfterDelay(target.transform.position, _screenFader.FadeDuration));
+
+                OnTeleported?.Invoke();
+            }
+        }
+    }
+
+    private void ShowLineRenderer(Ray ray, RaycastHit hit)
+    {
+        _pointingRayLine.enabled = true;
+        _pointingRayLine.SetPosition(0, ray.origin);
+        _pointingRayLine.SetPosition(1, hit.point);
     }
 
     void OnDestroy()
@@ -61,30 +109,24 @@ public class PointTeleportController : MonoBehaviour, IPlayerGesturesListener
 
     public void OnGesturePerformed(EPlayerGesture gesture, ESide side, Ray direction = default)
     {
-        if (gesture != EPlayerGesture.Pointing || IsTeleporting) return;
+        if (IsTeleporting) return;
 
-        if (!Physics.Raycast(direction, out RaycastHit hit, _maxDistance))
+        if(gesture == EPlayerGesture.Pointing)
         {
-            //LLogger.W("PointTeleportController: pointing ray hit nothing.");
-            return;
+            _isPointing = true;
+            hand = side;
         }
-
-        if (!hit.collider.CompareTag(_walkableTag))
+        else if(gesture == EPlayerGesture.PointingReleased && _isPointing)
         {
-            //LLogger.W($"PointTeleportController: pointing ray hit '{hit.collider.name}', which isn't tagged '{_walkableTag}'.");
-            return;
+            _isPointing = false;
+            hand = ESide.Other;
+
+            if (_pointingRayLine != null)
+            {
+                _pointingRayLine.enabled = false;
+                _pointingRayLine.SetPositions(null);
+            }
         }
-
-        if(_pointingRayLine != null)
-        {
-            _pointingRayLine.enabled = true;
-            _pointingRayLine.SetPosition(0, direction.origin);
-            _pointingRayLine.SetPosition(1, hit.point);
-        }
-
-        StartCoroutine(TeleportAfterDelay(hit.collider.gameObject.transform.position, _screenFader.FadeDuration));
-
-        OnTeleported?.Invoke();
     }
 
     private IEnumerator TeleportAfterDelay(Vector3 point, float fadeDuration)

@@ -90,8 +90,7 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
                 }
             }
         }
-
-        if(CurrentStep == EScentCalibrationStep.READY && !_scentDiffused)
+        else if(CurrentStep == EScentCalibrationStep.READY && !_scentDiffused)
         {
             float dist = Vector3.Distance(Diffuser.transform.position, _masterScenario.Player.Head.transform.position);
             if(dist <= _masterScenario.MinDistanceFromHeadToDiffuse)
@@ -191,7 +190,6 @@ public class ScentCalibrationBooth : MonoBehaviour, IPlayerGesturesListener
             _masterScenario.ClipsReceiver.HandleClip(_skipScentInstruction);
             _masterScenario.OnBoothEnded();
             _masterScenario.Player.RemoveListener(this);
-
         }
         else
         {

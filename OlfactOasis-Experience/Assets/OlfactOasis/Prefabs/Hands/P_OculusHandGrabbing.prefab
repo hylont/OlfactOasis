@@ -70,43 +70,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.817
+      value: -0.357951
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.68236
+      value: 1.1449625
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.31841
+      value: 0.06533016
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.043472324
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.866452
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.25345337
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.42794
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 8.14
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 129.521
       objectReference: {fileID: 0}
     - target: {fileID: 2242008237107085697, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -151.232
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732456613163524400, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.b
+      value: 0.6698113
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732456613163524400, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.g
+      value: 0.6698113
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732456613163524400, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.r
+      value: 0.6698113
       objectReference: {fileID: 0}
     - target: {fileID: 4635418954081200086, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -178,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6956245389139105253, guid: 12f7a14dd32988c4c9ce5a51367e197b, type: 3}
       propertyPath: m_Name
-      value: P_OculusHandGrabbing Variant
+      value: P_OculusHandGrabbing
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -116,6 +116,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -115.904
       objectReference: {fileID: 0}
+    - target: {fileID: 4233640015738110555, guid: d6ad3a1dd455f004cbf7a89b024c8c26, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.b
+      value: 0.5034405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4233640015738110555, guid: d6ad3a1dd455f004cbf7a89b024c8c26, type: 3}
+      propertyPath: _colorProperties.Array.data[0].value.r
+      value: 0.7924528
+      objectReference: {fileID: 0}
     - target: {fileID: 6554364642955171056, guid: d6ad3a1dd455f004cbf7a89b024c8c26, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.795897
@@ -242,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9197132971346343566, guid: d6ad3a1dd455f004cbf7a89b024c8c26, type: 3}
       propertyPath: m_Name
-      value: P_OculusHandPinching Variant
+      value: P_OculusHandPinching
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

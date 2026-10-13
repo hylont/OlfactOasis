@@ -507,13 +507,13 @@ MonoBehaviour:
   m_movementSource: {fileID: 4347793463700829549}
   m_footDustParticles: {fileID: 0}
   m_offsetToDestination: 0.5
-  m_offsetToDestinationWalk: 2
+  m_offsetToDestinationWalk: 1
   m_movementData:
     m_animatorParameterName: MOVEMENT_SPEED
     WalkSpeed: 1
-    WalkClip: {fileID: 0}
+    WalkClip: {fileID: 8300000, guid: 1a5fd3651404a334e8bc4c0df2ea55f9, type: 3}
     RunSpeed: 1
-    RunClip: {fileID: 0}
+    RunClip: {fileID: 8300000, guid: 1a5fd3651404a334e8bc4c0df2ea55f9, type: 3}
   m_debug: 0
   m_destinationAnimatorParameterName: DESTINATION_REACHED
   m_longWaitTime: 3
@@ -588,6 +588,7 @@ MonoBehaviour:
   _pivotingAnim: PIVOTING
   _pivotTurnSpeed: 180
   _lookAtAngleThreshold: 2
+  _lookCameraWhenTalking: 1
   TalkingAudioSource: {fileID: 8304063307204517215}
   AudioDescription: {fileID: 6723791060065195952}
   _talkingSampleWindow: 256

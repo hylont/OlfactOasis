@@ -33,7 +33,8 @@ public class ScentCalibrationScenario : MonoBehaviour
     public Player Player;
     public OlfyHandler ScentDiffuser;
 
-    [Header("On Calibration ended")]
+    [Header("On Calibration ended (set fader for delay)")]
+    [SerializeField] ScreenFader _fader;
     public UnityEvent OnCalibrationEnded;
 
     [Header("Orders and lines")]
@@ -134,8 +135,22 @@ public class ScentCalibrationScenario : MonoBehaviour
         else
         {
             ClipsReceiver.HandleClip(_calibrationSuccessfulInstruction);
-            OnCalibrationEnded.Invoke();
+            if (_fader)
+            {
+                _fader.FadeInAndOut();
+                StartCoroutine(EndScenario_Delayed(_fader.FadeDuration));
+            }
+            else
+            {
+                OnCalibrationEnded.Invoke();
+            }
         }
+    }
+
+    private IEnumerator EndScenario_Delayed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        OnCalibrationEnded.Invoke();
     }
 
     // Keeps, as the optimal intensity, the strength that was rated pleasant (thumb up) with the

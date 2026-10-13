@@ -129,7 +129,7 @@ public class ArgosAI : MovementAI, IClipsReceiver
     {
         if (_lookCameraWhenTalking)
         {
-            LookAtCamera();
+            LookAt(Camera.main.transform);
         }
 
         if(_receiver != null)
@@ -183,12 +183,6 @@ public class ArgosAI : MovementAI, IClipsReceiver
         return index;
     }
 
-    [Button("Set Mood to Happy")]
-    void SetMoodHappy() => SetMood(EArgosMood.Happy);
-
-    [Button("Set Mood to Default")]
-    void SetMoodDefault() => SetMood(EArgosMood.Default);
-
     public void SetMood(EArgosMood mood)
     {
         if (!_facesConfig.TryGetValue(mood, out ArgosMoodData targetFace))
@@ -202,9 +196,6 @@ public class ArgosAI : MovementAI, IClipsReceiver
         if (_moodTransitionCoroutine != null) StopCoroutine(_moodTransitionCoroutine);
         _moodTransitionCoroutine = StartCoroutine(TransitionMoodRoutine(targetFace));
     }
-
-    [Button("Look at Camera")]
-    void LookAtCamera() => LookAt(Camera.main.transform);
 
     public void LookAt(Transform target)
     {
